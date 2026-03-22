@@ -34,7 +34,7 @@ export default function Navigation() {
     { name: "Mengapa Kami", href: "#mengapa-kami", icon: faQuestionCircle },
     { name: "Service", href: "#service", icon: faServer },
     { name: "Workflow", href: "#workflow", icon: faProjectDiagram },
-    { name: "Portfolio", href: "#portfolio", icon: faBriefcase },
+    // { name: "Portfolio", href: "#portfolio", icon: faBriefcase },
     { name: "Data Security", href: "#data-security", icon: faShieldAlt },
     { name: "FAQ", href: "#faq", icon: faComments },
     { name: "Contact", href: "#contact", icon: faEnvelope },

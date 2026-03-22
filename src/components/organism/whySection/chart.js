@@ -16,8 +16,8 @@ const EfficiencyParallax = () => {
   const [progress, setProgress] = useState(0);
 
   // Data efisiensi berdasarkan laporan nyata 2024–2026
-  const dataNonAI = [48, 40, 44, 25, 38, 51, 18, 5];
-  const dataAI = [90, 80, 84, 75, 68, 79, 69, 72];
+  const dataNonAI = [22, 35, 48, 30, 25, 40, 15, 20];
+  const dataAI = [88, 76, 94, 85, 87, 92, 75, 45];
   
   const monthLabels = [
     "Produktivitas",

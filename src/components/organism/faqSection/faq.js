@@ -5,7 +5,6 @@ import Paragraph from "@/components/atoms/paragraph/paragraph";
 import Section from "@/components/template/section/section";
 import { useEffect, useState } from "react";
 
-
 const faqs = [
   {
     id: 1,
@@ -39,7 +38,8 @@ const faqs = [
   },
   {
     id: 6,
-    question: "Apakah kami perlu tim teknis internal untuk menggunakan layanan ini?",
+    question:
+      "Apakah kami perlu tim teknis internal untuk menggunakan layanan ini?",
     answer:
       "Tidak perlu. Kami menangani seluruh proses teknis — dari desain sistem, integrasi, hingga deployment. Tim Anda hanya perlu menjalankan bisnis seperti biasa; kami yang memastikan sistem AI bekerja di belakang layar.",
   },
@@ -60,16 +60,22 @@ export default function FaqSection() {
   const toggle = (id) => setOpenId((prev) => (prev === id ? null : id));
 
   return (
-    <Section className="relative overflow-hidden py-24 px-4 sm:px-8">
+    <Section id="faq" className="relative overflow-hidden py-24 px-4 sm:px-8">
       {/* Orb glows */}
       <div className="pointer-events-none absolute inset-0 -z-0">
         <div
           className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(90,50,200,0.12) 0%, transparent 65%)" }}
+          style={{
+            background:
+              "radial-gradient(ellipse, rgba(90,50,200,0.12) 0%, transparent 65%)",
+          }}
         />
         <div
           className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(50,90,220,0.08) 0%, transparent 65%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(50,90,220,0.08) 0%, transparent 65%)",
+          }}
         />
       </div>
 
@@ -84,24 +90,23 @@ export default function FaqSection() {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-16 items-start">
-
         {/* ── LEFT ── */}
         <div
           className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-
           {/* Heading */}
           <H2>
-Pertanyaan yang
+            Pertanyaan yang
             <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
-               {" "} sering ditanyakan
+              {" "}
+              sering ditanyakan
             </span>
           </H2>
 
           {/* Subtext */}
           <Paragraph>
-            Pilih layanan yang sesuai kebutuhan dan skala bisnis Anda. Tidak ada biaya tersembunyi —
-            semua transparan sejak awal diskusi.
+            Pilih layanan yang sesuai kebutuhan dan skala bisnis Anda. Tidak ada
+            biaya tersembunyi — semua transparan sejak awal diskusi.
           </Paragraph>
         </div>
 
@@ -112,19 +117,19 @@ Pertanyaan yang
           {faqs.map((faq, i) => {
             const isOpen = openId === faq.id;
             return (
-<div
-  key={faq.id}
-  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-    isOpen
-      ? "border-purple-500/40 bg-gradient-to-br from-violet-600/20 to-indigo-600/20 backdrop-blur-sm"
-      : "border-white/[0.07] bg-[#0e0e1a] hover:border-white/[0.12]"
-  }`}
-  style={{
-    opacity: visible ? 1 : 0,
-    transform: visible ? "translateY(0)" : "translateY(16px)",
-    transition: `opacity 0.5s ease ${i * 60}ms, transform 0.5s ease ${i * 60}ms, border-color 0.3s, background 0.3s`,
-  }}
->
+              <div
+                key={faq.id}
+                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                  isOpen
+                    ? "border-purple-500/40 bg-gradient-to-br from-violet-600/20 to-indigo-600/20 backdrop-blur-sm"
+                    : "border-white/[0.07] bg-[#0e0e1a] hover:border-white/[0.12]"
+                }`}
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform: visible ? "translateY(0)" : "translateY(16px)",
+                  transition: `opacity 0.5s ease ${i * 60}ms, transform 0.5s ease ${i * 60}ms, border-color 0.3s, background 0.3s`,
+                }}
+              >
                 {/* Question row */}
                 <button
                   onClick={() => toggle(faq.id)}
@@ -132,7 +137,9 @@ Pertanyaan yang
                 >
                   <span
                     className={`text-sm font-semibold leading-snug transition-colors duration-300 ${
-                      isOpen ? "text-white" : "text-neutral-400 group-hover:text-neutral-200"
+                      isOpen
+                        ? "text-white"
+                        : "text-neutral-400 group-hover:text-neutral-200"
                     }`}
                     style={{ fontFamily: "'Syne', sans-serif" }}
                   >
@@ -155,7 +162,7 @@ Pertanyaan yang
                       strokeWidth="1.8"
                       strokeLinecap="round"
                     >
-                      <path d="M4 6l4 4 4-4"/>
+                      <path d="M4 6l4 4 4-4" />
                     </svg>
                   </div>
                 </button>
@@ -163,7 +170,10 @@ Pertanyaan yang
                 {/* Answer */}
                 <div
                   className="overflow-hidden transition-all duration-500 ease-in-out"
-                  style={{ maxHeight: isOpen ? "200px" : "0px", opacity: isOpen ? 1 : 0 }}
+                  style={{
+                    maxHeight: isOpen ? "200px" : "0px",
+                    opacity: isOpen ? 1 : 0,
+                  }}
                 >
                   <p className="px-6 pb-6 text-sm text-neutral-500 leading-relaxed">
                     {faq.answer}

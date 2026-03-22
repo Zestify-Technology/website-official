@@ -111,7 +111,7 @@ export default function SecuritySection() {
   }, []);
 
   return (
-    <Section className="overflow-hidden py-24 px-4 sm:px-8 relative">
+    <Section id="data-security" className="overflow-hidden py-24 px-4 sm:px-8 relative">
       {/* Orb glows */}
       <div className="pointer-events-none absolute inset-0 -z-0">
         <div
@@ -145,7 +145,7 @@ export default function SecuritySection() {
               </span>
             </H2>
             <Paragraph align="center">
-              Sebagai agensi AI yang mengintegrasikan sistem ke bisnis Anda, kepercayaan dibangun
+              Sebagai agensi teknologi yang mengintegrasikan sistem ke bisnis Anda, kepercayaan dibangun
               dari transparansi. Berikut jaminan konkret yang bisa Anda verifikasi.
             </Paragraph>
           </div>

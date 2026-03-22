@@ -103,7 +103,7 @@ export default function TechStack() {
                   src={tech.icon}
                   alt={tech.name}
                   fill
-                  className="object-contain group-hover:brightness-110 transition-all ease-in-out duration-500 invert-50 group-hover:invert-10"
+                  className="object-contain group-hover:brightness-110 transition-all ease-in-out duration-500 invert-0 lg:invert-50 group-hover:invert-10"
                   sizes="(max-width: 768px) 80px, 112px"
                 />
               </div>

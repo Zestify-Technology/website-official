@@ -118,11 +118,6 @@ export default function WhyUsSection() {
                     {item.desc}
                   </Paragraph>
 
-                  {/* Learn More */}
-                  <div className={`mt-5 inline-flex items-center gap-1.5 font-medium transition-all duration-300 group-hover:gap-2.5 text-sm ${item.featured ? 'text-white/80' : 'text-white/30 group-hover:text-white/60'}`}>
-                    Pelajari lebih lanjut
-                    <FaArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                  </div>
                 </div>
 
                 {/* Featured Decorations */}
