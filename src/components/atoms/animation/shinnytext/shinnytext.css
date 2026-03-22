@@ -1,0 +1,36 @@
+.shiny-text {
+  color: #ffffff; /* teks utama selalu putih */
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+/* Layer efek shine gelap */
+.shiny-text::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 250%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.5) 50%,  /* gelap di tengah */
+    rgba(0, 0, 0, 0) 60%
+  );
+  animation: shine-dark 5s linear infinite;
+}
+
+@keyframes shine-dark {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+.shiny-text.disabled::after {
+  animation: none;
+}
