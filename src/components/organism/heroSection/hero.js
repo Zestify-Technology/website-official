@@ -11,11 +11,11 @@ export default function HeroSection() {
             w-[80%] md:w-[39%] inset-0 flex flex-col gap-4
             "
       >
-        <H1 align="center">Satu Sistem Cerdas untuk Ribuan Solusi Efisien.</H1>
+        <H1 align="center">Satu Sistem Cerdas, Ribuan Solusi Efisien</H1>
         <Paragraph align="center">
-          Integrasi AI hadir untuk membereskan bottleneck di operasional Anda.
-          Dari otomatisasi tugas repetitif hingga laporan data real-time,
-          semuanya dalam satu kendali.
+          Kami membangun ekosistem teknologi berbasis AI untuk efisiensi bisnis
+          Anda. Satu sistem cerdas yang mampu menghadirkan ribuan solusi digital
+          otomatis dan tepat guna.
         </Paragraph>
 
         <div className="flex justify-center gap-10">

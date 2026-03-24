@@ -1,7 +1,6 @@
 import GradualBlurMemo from "@/components/atoms/animation/gradual blur/gradualblur";
-import Aurora from "@/components/atoms/background/aurora";
 import Orb from "@/components/atoms/background/orb";
-import Plasma from "@/components/atoms/background/plasma";
+import JsonLd from "@/components/atoms/JsonLd";
 import Navbar from "@/components/molecules/navbar/navbar";
 import FaqSection from "@/components/organism/faqSection/faq";
 import Footer from "@/components/organism/footer/footer";
@@ -9,22 +8,30 @@ import HeroSection from "@/components/organism/heroSection/hero";
 import SecuritySection from "@/components/organism/securitySection/security";
 import ServicesSection from "@/components/organism/service/service";
 import TechStack from "@/components/organism/techstack/techstack";
-import EfficiencyParallax from "@/components/organism/whySection/chart";
 import WhyUsSection from "@/components/organism/whySection/why";
 import WorkflowSection from "@/components/organism/workflowSection/workflow";
 import Main from "@/components/template/mainSection/main";
 import Image from "next/image";
 
 
+export const metadata = {
+  title: "Agensi Teknologi Penerapan AI",
+  description:
+    "Kami membangun ekosistem teknologi berbasis AI untuk efisiensi bisnis Anda. Satu sistem cerdas yang mampu menghadirkan ribuan solusi digital otomatis dan tepat guna.",
+};
 
-
-
-
+const websiteData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Zestify',
+  url: 'https://zestify.my.id',
+}
 
 // HALAMAN LANDING PAGE PERUSAHAAN
 export default function Home() {
   return (
     <>
+    <JsonLd data={websiteData} />
       {/*
         SEBELUM: overflowY: "auto" → sticky mati total karena
         scroll terjadi di dalam div ini, bukan di window.
@@ -32,7 +39,7 @@ export default function Home() {
         SESUDAH: hapus overflowY, pakai minHeight agar layout
         tetap benar. Scroll sekarang terjadi di window → sticky bekerja.
       */}
-      <div >
+      <div>
         {/* NAVBAR */}
         <Navbar />
 
@@ -51,15 +58,15 @@ export default function Home() {
         <Main>
           <HeroSection />
           <TechStack />
-            <div id="mengapa-kami" className="py-40" >
-                <WhyUsSection />
-            </div>
-          <ServicesSection/>
-          <WorkflowSection/>
-          <SecuritySection/>
-          <FaqSection/>
+          <div id="mengapa-kami" className="py-40">
+            <WhyUsSection />
+          </div>
+          <ServicesSection />
+          <WorkflowSection />
+          <SecuritySection />
+          <FaqSection />
         </Main>
-        <Footer/>
+        <Footer />
       </div>
 
       <GradualBlurMemo
