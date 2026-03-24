@@ -58,6 +58,7 @@ export default function RootLayout({ children }) {
       >
         <JsonLd data={organizationData} />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
