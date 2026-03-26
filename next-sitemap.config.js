@@ -21,5 +21,4 @@ module.exports = {
   },
 
   exclude: ["/admin/*", "/dashboard/*"],
-
 };

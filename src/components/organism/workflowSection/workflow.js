@@ -51,7 +51,7 @@ export default function WorkflowSection() {
   return (
     <Section
       id="workflow"
-      className="isolate  overflow-hidden w-full px-4 sm:px-8 py-16 lg:py-24"
+      className="isolate  overflow-hidden w-full py-28 px-6"
     >
       <div className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start lg:items-center">
         {/* ── LEFT ── */}

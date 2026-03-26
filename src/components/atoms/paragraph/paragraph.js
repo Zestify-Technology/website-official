@@ -1,4 +1,9 @@
-export default function Paragraph({ children, align, fontSize = "base", color='#9e9e9e' }) {
+export default function Paragraph({
+  children,
+  align,
+  fontSize = "base",
+  color = "#9e9e9e",
+}) {
   return (
     <>
       <p

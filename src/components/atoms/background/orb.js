@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { Mesh, Program, Renderer, Triangle, Vec3 } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { Mesh, Program, Renderer, Triangle, Vec3 } from "ogl";
+import { useEffect, useRef } from "react";
 
 export default function Orb({
   hue = 0,
   hoverIntensity = 0.2,
   rotateOnHover = true,
   forceHoverState = false,
-  backgroundColor = '#000000'
+  backgroundColor = "#000000",
 }) {
   const ctnDom = useRef(null);
 
@@ -194,14 +194,20 @@ export default function Orb({
       vertex: vert,
       fragment: frag,
       uniforms: {
-        iTime:           { value: 0 },
-        iResolution:     { value: new Vec3(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height) },
-        hue:             { value: hue },
-        hover:           { value: 0 },
-        rot:             { value: 0 },
-        hoverIntensity:  { value: hoverIntensity },
-        backgroundColor: { value: hexToVec3(backgroundColor) }
-      }
+        iTime: { value: 0 },
+        iResolution: {
+          value: new Vec3(
+            gl.canvas.width,
+            gl.canvas.height,
+            gl.canvas.width / gl.canvas.height,
+          ),
+        },
+        hue: { value: hue },
+        hover: { value: 0 },
+        rot: { value: 0 },
+        hoverIntensity: { value: hoverIntensity },
+        backgroundColor: { value: hexToVec3(backgroundColor) },
+      },
     });
 
     const mesh = new Mesh(gl, { geometry, program });
@@ -211,15 +217,16 @@ export default function Orb({
     // DPR 1.5 sudah cukup tajam di hampir semua layar.
     function resize() {
       if (!container) return;
-      const dpr    = Math.min(window.devicePixelRatio || 1, 1.5);
-      const width  = container.clientWidth;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const width = container.clientWidth;
       const height = container.clientHeight;
       renderer.setSize(width * dpr, height * dpr);
-      gl.canvas.style.width  = width  + 'px';
-      gl.canvas.style.height = height + 'px';
+      gl.canvas.style.width = width + "px";
+      gl.canvas.style.height = height + "px";
       program.uniforms.iResolution.value.set(
-        gl.canvas.width, gl.canvas.height,
-        gl.canvas.width / gl.canvas.height
+        gl.canvas.width,
+        gl.canvas.height,
+        gl.canvas.width / gl.canvas.height,
       );
     }
 
@@ -230,41 +237,45 @@ export default function Orb({
       resizeTimer = setTimeout(resize, 150);
     };
 
-    window.addEventListener('resize', debouncedResize);
+    window.addEventListener("resize", debouncedResize);
     resize();
 
-    let targetHover  = 0;
-    let lastTime     = 0;
-    let currentRot   = 0;
+    let targetHover = 0;
+    let lastTime = 0;
+    let currentRot = 0;
     const rotationSpeed = 0.3;
 
-    const handleMouseMove = e => {
-      const rect   = container.getBoundingClientRect();
-      const x      = e.clientX - rect.left;
-      const y      = e.clientY - rect.top;
-      const size   = Math.min(rect.width, rect.height);
-      const uvX    = ((x - rect.width  / 2) / size) * 2.0;
-      const uvY    = ((y - rect.height / 2) / size) * 2.0;
-      targetHover  = uvX * uvX + uvY * uvY < 0.64 ? 1 : 0; // 0.8^2 = 0.64
+    const handleMouseMove = (e) => {
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const size = Math.min(rect.width, rect.height);
+      const uvX = ((x - rect.width / 2) / size) * 2.0;
+      const uvY = ((y - rect.height / 2) / size) * 2.0;
+      targetHover = uvX * uvX + uvY * uvY < 0.64 ? 1 : 0; // 0.8^2 = 0.64
     };
 
-    const handleMouseLeave = () => { targetHover = 0; };
+    const handleMouseLeave = () => {
+      targetHover = 0;
+    };
 
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mouseleave", handleMouseLeave);
 
     // --- OPTIMASI 3: pause ketika tab tidak aktif ---
     let isPaused = false;
-    const handleVisibility = () => { isPaused = document.hidden; };
-    document.addEventListener('visibilitychange', handleVisibility);
+    const handleVisibility = () => {
+      isPaused = document.hidden;
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
 
     // --- OPTIMASI 4: cache nilai props agar tidak set uniform tiap frame kalau tidak berubah ---
-    let cachedHue  = hue;
-    let cachedBg   = backgroundColor;
+    let cachedHue = hue;
+    let cachedBg = backgroundColor;
     let cachedHoverIntensity = hoverIntensity;
 
     let rafId;
-    const update = t => {
+    const update = (t) => {
       rafId = requestAnimationFrame(update);
       if (isPaused) return; // skip render saat tab hidden
 
@@ -288,7 +299,8 @@ export default function Orb({
       }
 
       const effectiveHover = forceHoverState ? 1 : targetHover;
-      program.uniforms.hover.value += (effectiveHover - program.uniforms.hover.value) * 0.1;
+      program.uniforms.hover.value +=
+        (effectiveHover - program.uniforms.hover.value) * 0.1;
 
       if (rotateOnHover && effectiveHover > 0.5) {
         currentRot += dt * rotationSpeed;
@@ -302,12 +314,12 @@ export default function Orb({
     return () => {
       cancelAnimationFrame(rafId);
       clearTimeout(resizeTimer);
-      window.removeEventListener('resize', debouncedResize);
-      document.removeEventListener('visibilitychange', handleVisibility);
-      container.removeEventListener('mousemove', handleMouseMove);
-      container.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener("resize", debouncedResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseleave", handleMouseLeave);
       if (gl.canvas.parentNode === container) container.removeChild(gl.canvas);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hue, hoverIntensity, rotateOnHover, forceHoverState, backgroundColor]);
@@ -327,15 +339,19 @@ function hslToRgb(h, s, l) {
   };
   const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
   const p = 2 * l - q;
-  return new Vec3(hue2rgb(p, q, h + 1/3), hue2rgb(p, q, h), hue2rgb(p, q, h - 1/3));
+  return new Vec3(
+    hue2rgb(p, q, h + 1 / 3),
+    hue2rgb(p, q, h),
+    hue2rgb(p, q, h - 1 / 3),
+  );
 }
 
 function hexToVec3(color) {
-  if (color.startsWith('#')) {
+  if (color.startsWith("#")) {
     return new Vec3(
       parseInt(color.slice(1, 3), 16) / 255,
       parseInt(color.slice(3, 5), 16) / 255,
-      parseInt(color.slice(5, 7), 16) / 255
+      parseInt(color.slice(5, 7), 16) / 255,
     );
   }
   const rgbMatch = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);

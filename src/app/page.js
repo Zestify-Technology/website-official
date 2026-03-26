@@ -12,7 +12,8 @@ import WhyUsSection from "@/components/organism/whySection/why";
 import WorkflowSection from "@/components/organism/workflowSection/workflow";
 import Main from "@/components/template/mainSection/main";
 import Image from "next/image";
-
+import Overlay from "@/components/template/overlay/overlay";
+import FAB from "@/components/molecules/fab/fab";
 
 export const metadata = {
   title: "Agensi Teknologi Penerapan AI",
@@ -21,17 +22,17 @@ export const metadata = {
 };
 
 const websiteData = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Zestify',
-  url: 'https://zestify.my.id',
-}
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Zestify",
+  url: "https://zestify.my.id",
+};
 
 // HALAMAN LANDING PAGE PERUSAHAAN
 export default function Home() {
   return (
     <>
-    <JsonLd data={websiteData} />
+      <JsonLd data={websiteData} />
       {/*
         SEBELUM: overflowY: "auto" → sticky mati total karena
         scroll terjadi di dalam div ini, bukan di window.
@@ -40,11 +41,12 @@ export default function Home() {
         tetap benar. Scroll sekarang terjadi di window → sticky bekerja.
       */}
       <div>
+        <FAB />
         {/* NAVBAR */}
         <Navbar />
 
         {/* BACKGROUND ORB */}
-        <div className="h-screen absolute lg:translate-x-[0px] lg:translate-y-[-40px] opacity-70 w-full">
+        <div className="h-screen absolute lg:translate-y-[0px] opacity-70 w-full">
           <Orb
             hoverIntensity={2}
             rotateOnHover

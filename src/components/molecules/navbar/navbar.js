@@ -17,12 +17,12 @@ import {
   faArrowRight,
   faXTwitter,
   faInstagram,
-  faLinkedin
+  faLinkedin,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faXTwitter as faXTwitterBrand,
   faInstagram as faInstagramBrand,
-  faLinkedin as faLinkedinBrand
+  faLinkedin as faLinkedinBrand,
 } from "@fortawesome/free-brands-svg-icons";
 
 export default function Navigation() {
@@ -32,12 +32,12 @@ export default function Navigation() {
 
   const listNav = [
     { name: "Mengapa Kami", href: "#mengapa-kami", icon: faQuestionCircle },
-    { name: "Service", href: "#service", icon: faServer },
+    { name: "Solusi", href: "#solution", icon: faServer },
     { name: "Workflow", href: "#workflow", icon: faProjectDiagram },
     // { name: "Portfolio", href: "#portfolio", icon: faBriefcase },
     { name: "Data Security", href: "#data-security", icon: faShieldAlt },
     { name: "FAQ", href: "#faq", icon: faComments },
-    { name: "Contact", href: "#contact", icon: faEnvelope },
+    // { name: "Contact", href: "#contact", icon: faEnvelope },
   ];
 
   // Handle mounting to avoid hydration mismatch
@@ -127,7 +127,9 @@ export default function Navigation() {
       >
         {/* Navbar start - Logo */}
         <div className="navbar-start flex items-center gap-3">
-          <div className={`2xl:hidden ${isMenuOpen ? 'hidden' : ''} transition-all duration-75`}>
+          <div
+            className={`2xl:hidden ${isMenuOpen ? "hidden" : ""} transition-all duration-75`}
+          >
             <button
               onClick={toggleMenu}
               className="-translate-y-[-10px] menu-toggle-btn btn btn-ghost btn-sm relative w-10 h-10 p-2 focus:outline-none hover:bg-white/10 rounded-full transition-all"
@@ -149,11 +151,12 @@ export default function Navigation() {
 
           <Link href="/" onClick={closeMenu}>
             <Image
-              src="/logo.png"
-              alt="Logo Zestify Technology"
-              width={70}
-              height={45}
-              className="w-[60px] md:w-[70px] p-2 h-auto object-contain transition-all duration-75"
+              src="/logo text.png"
+              width={150}
+              height={40}
+              style={{ width: "100px", height: "auto" }} // Mengunci ukuran mobile secara instan
+              className="md:!w-[130px] lg:!w-[150px] h-auto object-contain"
+              alt="Logo"
               priority
             />
           </Link>
@@ -204,7 +207,9 @@ export default function Navigation() {
           <div className="sticky top-0 bg-[#131313] backdrop-blur-md border-b border-white/10 p-6 flex justify-between items-center">
             <div className="flex items-center gap-3">
               <div>
-                <h3 className="text-white font-semibold text-base">Selamat Datang!</h3>
+                <h3 className="text-white font-semibold text-base">
+                  Selamat Datang!
+                </h3>
                 <p className="text-white/40 text-xs">Zestify Technology</p>
               </div>
             </div>
@@ -212,8 +217,8 @@ export default function Navigation() {
               onClick={closeMenu}
               className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-300 group"
             >
-              <FontAwesomeIcon 
-                icon={faTimes} 
+              <FontAwesomeIcon
+                icon={faTimes}
                 className="w-4 h-4 text-white/60 group-hover:text-white"
               />
             </button>
@@ -238,8 +243,8 @@ export default function Navigation() {
 
                     {/* Icon Font Awesome berdasarkan menu */}
                     <span className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#0184ff]/20 transition-colors">
-                      <FontAwesomeIcon 
-                        icon={item.icon} 
+                      <FontAwesomeIcon
+                        icon={item.icon}
                         className="w-4 h-4 text-white/80 group-hover:text-white"
                       />
                     </span>
@@ -248,8 +253,8 @@ export default function Navigation() {
                       {item.name}
                     </span>
 
-                    <FontAwesomeIcon 
-                      icon={faArrowRight} 
+                    <FontAwesomeIcon
+                      icon={faArrowRight}
                       className="w-4 h-4 text-white/20 group-hover:text-[#0184ff] transform group-hover:translate-x-1 transition-all"
                     />
                   </Link>
@@ -267,8 +272,14 @@ export default function Navigation() {
                   href="#"
                   className="text-white/40 hover:text-[#0184ff] transition-colors"
                 >
-                  <FontAwesomeIcon 
-                    icon={faXTwitterBrand} 
+                  <FontAwesomeIcon icon={faXTwitterBrand} className="w-5 h-5" />
+                </a>
+                <a
+                  href="#"
+                  className="text-white/40 hover:text-[#0184ff] transition-colors"
+                >
+                  <FontAwesomeIcon
+                    icon={faInstagramBrand}
                     className="w-5 h-5"
                   />
                 </a>
@@ -276,19 +287,7 @@ export default function Navigation() {
                   href="#"
                   className="text-white/40 hover:text-[#0184ff] transition-colors"
                 >
-                  <FontAwesomeIcon 
-                    icon={faInstagramBrand} 
-                    className="w-5 h-5"
-                  />
-                </a>
-                <a
-                  href="#"
-                  className="text-white/40 hover:text-[#0184ff] transition-colors"
-                >
-                  <FontAwesomeIcon 
-                    icon={faLinkedinBrand} 
-                    className="w-5 h-5"
-                  />
+                  <FontAwesomeIcon icon={faLinkedinBrand} className="w-5 h-5" />
                 </a>
               </div>
             </div>

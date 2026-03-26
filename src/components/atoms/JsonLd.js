@@ -4,5 +4,5 @@ export default function JsonLd({ data }) {
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
-  )
+  );
 }

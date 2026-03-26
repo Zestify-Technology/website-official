@@ -6,11 +6,8 @@ import Section from "@/components/template/section/section";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-
 // BAGIAN TECH STACK
 export default function TechStack() {
-
-
   // INITIAL DATA
   const techData = [
     {
@@ -24,18 +21,18 @@ export default function TechStack() {
       color: "#2D9CDB",
     },
     {
+      name: "AWS",
+      icon: "/icons/aws.png",
+      color: "#FFFFFF",
+    },
+    {
       name: "Vercel",
       icon: "/icons/vercel_logo.png",
       color: "#FFFFFF",
     },
   ];
 
-
-
   const sectionRef = useRef(null);
-
-
-
 
   // EFEK MEMUDAR SEDERHANA
   useEffect(() => {
@@ -58,8 +55,6 @@ export default function TechStack() {
   }, []);
 
   return (
-
-
     // BAGIAN UTAMA (CLIENT)
     <Section
       id="stack-tech"
@@ -88,7 +83,7 @@ export default function TechStack() {
       </div>
 
       {/* Tech Icons */}
-      <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16 lg:gap-20 relative z-10">
+      <div className="flex flex-wrap justify-center items-center md:gap-16 lg:gap-20 relative z-10">
         {techData.map((tech, index) => (
           <div
             key={index}
@@ -96,21 +91,20 @@ export default function TechStack() {
             style={{ transitionDelay: `${index * 200}ms` }}
           >
             {/* Icon Container */}
-            <div className="relative w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28">
-              {/* Icon */}
-              <div className="relative w-full h-full transition-all duration-500 transform group-hover:scale-110">
+            <div className="w-30 h-30 md:w-24 md:h-24 lg:w-28 lg:h-28 flex items-center justify-center ">
+              <div className="relative w-[70%] h-[70%]">
                 <Image
                   src={tech.icon}
                   alt={tech.name}
                   fill
-                  className="object-contain group-hover:brightness-110 transition-all ease-in-out duration-500 invert-0 lg:invert-50 group-hover:invert-10"
-                  sizes="(max-width: 768px) 80px, 112px"
+                  className="object-contain transition-all duration-500 group-hover:scale-110  invert-0 lg:invert-50 group-hover:invert-10"
+                  sizes="80px"
                 />
               </div>
             </div>
 
             {/* Nama Tech muncul saat hover */}
-            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap group-hover:translate-y-0 translate-y-2">
+            <div className="absolute hidden md:block -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap group-hover:translate-y-0 translate-y-2">
               <ShinyButton className="text-xs md:text-sm">
                 {tech.name}
               </ShinyButton>

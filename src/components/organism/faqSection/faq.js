@@ -60,7 +60,7 @@ export default function FaqSection() {
   const toggle = (id) => setOpenId((prev) => (prev === id ? null : id));
 
   return (
-    <Section id="faq" className="relative overflow-hidden py-24 px-4 sm:px-8">
+    <Section id="faq" className="relative overflow-hidden py-28 px-6">
       {/* Orb glows */}
       <div className="pointer-events-none absolute inset-0 -z-0">
         <div
@@ -97,7 +97,7 @@ export default function FaqSection() {
           {/* Heading */}
           <H2>
             Pertanyaan yang
-            <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
               {" "}
               sering ditanyakan
             </span>
@@ -119,9 +119,9 @@ export default function FaqSection() {
             return (
               <div
                 key={faq.id}
-                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                className={`rounded-2xl transition-all duration-300 overflow-hidden ${
                   isOpen
-                    ? "border-purple-500/40 bg-gradient-to-br from-violet-600/20 to-indigo-600/20 backdrop-blur-sm"
+                    ? "bg-indigo-500 backdrop-blur-sm"
                     : "border-white/[0.07] bg-[#0e0e1a] hover:border-white/[0.12]"
                 }`}
                 style={{
@@ -150,7 +150,7 @@ export default function FaqSection() {
                   <div
                     className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
                       isOpen
-                        ? "bg-purple-600 text-white"
+                        ? "bg-white text-indigo-500"
                         : "bg-white/[0.06] text-neutral-400 group-hover:bg-white/[0.1]"
                     }`}
                   >
@@ -175,7 +175,7 @@ export default function FaqSection() {
                     opacity: isOpen ? 1 : 0,
                   }}
                 >
-                  <p className="px-6 pb-6 text-sm text-neutral-500 leading-relaxed">
+                  <p className="px-6 pb-6 text-sm text-[#e6e6e6] leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>

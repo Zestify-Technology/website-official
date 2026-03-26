@@ -14,9 +14,19 @@ const guarantees = [
     iconBg: "bg-purple-600",
     featured: true,
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="1.8">
-        <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-5 h-5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      >
+        <path
+          d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -28,9 +38,18 @@ const guarantees = [
     iconBg: "bg-cyan-500",
     featured: false,
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="1.8">
-        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" strokeLinecap="round"/>
-        <circle cx="12" cy="12" r="3" strokeLinecap="round"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-5 h-5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      >
+        <path
+          d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+          strokeLinecap="round"
+        />
+        <circle cx="12" cy="12" r="3" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -42,10 +61,23 @@ const guarantees = [
     iconBg: "bg-emerald-500",
     featured: false,
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="1.8">
-        <rect x="3" y="11" width="18" height="11" rx="2" strokeLinecap="round"/>
-        <path d="M7 11V7a5 5 0 0110 0v4" strokeLinecap="round"/>
-        <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-5 h-5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      >
+        <rect
+          x="3"
+          y="11"
+          width="18"
+          height="11"
+          rx="2"
+          strokeLinecap="round"
+        />
+        <path d="M7 11V7a5 5 0 0110 0v4" strokeLinecap="round" />
+        <circle cx="12" cy="16" r="1.5" fill="currentColor" />
       </svg>
     ),
   },
@@ -57,9 +89,18 @@ const guarantees = [
     iconBg: "bg-pink-500",
     featured: false,
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="1.8">
-        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" strokeLinecap="round"/>
-        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" strokeLinecap="round"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-5 h-5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      >
+        <path
+          d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+          strokeLinecap="round"
+        />
+        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -71,8 +112,18 @@ const guarantees = [
     iconBg: "bg-blue-500",
     featured: false,
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="1.8">
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" strokeLinecap="round" strokeLinejoin="round"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-5 h-5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      >
+        <polyline
+          points="22 12 18 12 15 21 9 3 6 12 2 12"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     ),
   },
@@ -84,11 +135,20 @@ const guarantees = [
     iconBg: "bg-orange-500",
     featured: false,
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="1.8">
-        <polyline points="3 6 5 6 21 6" strokeLinecap="round"/>
-        <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" strokeLinecap="round"/>
-        <path d="M10 11v6M14 11v6" strokeLinecap="round"/>
-        <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" strokeLinecap="round"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-5 h-5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      >
+        <polyline points="3 6 5 6 21 6" strokeLinecap="round" />
+        <path
+          d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"
+          strokeLinecap="round"
+        />
+        <path d="M10 11v6M14 11v6" strokeLinecap="round" />
+        <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -111,16 +171,22 @@ export default function SecuritySection() {
   }, []);
 
   return (
-    <Section id="data-security" className="overflow-hidden py-24 px-4 sm:px-8 relative">
+    <Section id="data-security" className="overflow-hidden py-28 px-6 relative">
       {/* Orb glows */}
       <div className="pointer-events-none absolute inset-0 -z-0">
         <div
           className="absolute left-1/2 -translate-x-1/2 w-[400px] h-[300px] rounded-full"
-          style={{ background: "radial-gradient(ellipse, rgba(90,50,200,0.16) 0%, rgba(50,30,150,0.06) 45%, transparent 70%)" }}
+          style={{
+            background:
+              "radial-gradient(ellipse, rgba(90,50,200,0.16) 0%, rgba(50,30,150,0.06) 45%, transparent 70%)",
+          }}
         />
         <div
           className="absolute bottom-0 right-[-60px] w-[400px] h-[400px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(50,90,220,0.1) 0%, transparent 65%)" }}
+          style={{
+            background:
+              "radial-gradient(circle, rgba(50,90,220,0.1) 0%, transparent 65%)",
+          }}
         />
       </div>
 
@@ -136,7 +202,9 @@ export default function SecuritySection() {
 
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Header */}
-        <div className={`flex flex-col justify-center items-center text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div
+          className={`flex flex-col justify-center items-center text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
           <div className="w-[70%]">
             <H2 align="center">
               Kami Bekerja dengan Data Anda —{" "}
@@ -145,8 +213,9 @@ export default function SecuritySection() {
               </span>
             </H2>
             <Paragraph align="center">
-              Sebagai agensi teknologi yang mengintegrasikan sistem ke bisnis Anda, kepercayaan dibangun
-              dari transparansi. Berikut jaminan konkret yang bisa Anda verifikasi.
+              Sebagai agensi teknologi yang mengintegrasikan sistem ke bisnis
+              Anda, kepercayaan dibangun dari transparansi. Berikut jaminan
+              konkret yang bisa Anda verifikasi.
             </Paragraph>
           </div>
         </div>
@@ -156,7 +225,10 @@ export default function SecuritySection() {
           className={`mb-14 rounded-2xl border border-purple-500/20 bg-[#0a0a12]/40 backdrop-blur-sm px-8 py-7 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           style={{ boxShadow: "inset 0 1px 0 rgba(150,100,255,0.1)" }}
         >
-          <p className="text-white font-semibold text-base mb-5" style={{ fontFamily: "'Syne', sans-serif" }}>
+          <p
+            className="text-white font-semibold text-base mb-5"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
             Data bisnis Anda tidak akan pernah:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -164,7 +236,13 @@ export default function SecuritySection() {
               <div key={i} className="flex items-center gap-3">
                 <div className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center">
                   <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3">
-                    <path d="M2 6l3 3 5-5" stroke="#a78bfa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path
+                      d="M2 6l3 3 5-5"
+                      stroke="#a78bfa"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </div>
                 <span className="text-sm text-neutral-300">{p}</span>
@@ -181,9 +259,10 @@ export default function SecuritySection() {
               onMouseEnter={() => setHovered(g.id)}
               onMouseLeave={() => setHovered(null)}
               className={`relative rounded-2xl p-6 cursor-pointer transition-all duration-300 group overflow-hidden
-                ${g.featured
-                  ? "bg-gradient-to-r from-violet-600 to-indigo-600"
-                  : "bg-[#13131f] border border-white/[0.07] hover:border-white/[0.14] hover:bg-[#16162a]"
+                ${
+                  g.featured
+                    ? "bg-gradient-to-r from-violet-600 to-indigo-600"
+                    : "bg-[#13131f] border border-white/[0.07] hover:border-white/[0.14] hover:bg-[#16162a]"
                 }`}
               style={{
                 transitionDelay: `${i * 60}ms`,
@@ -193,12 +272,16 @@ export default function SecuritySection() {
               }}
             >
               {/* Icon — rounded square solid color */}
-              <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 text-white transition-transform duration-300 group-hover:scale-110 ${g.iconBg}`}>
+              <div
+                className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 text-white transition-transform duration-300 group-hover:scale-110 ${g.iconBg}`}
+              >
                 {g.icon}
               </div>
 
               {/* Tag */}
-              <p className={`text-xs tracking-widest font-semibold uppercase mb-3 ${g.featured ? "text-white/60" : "text-white/30"}`}>
+              <p
+                className={`text-xs tracking-widest font-semibold uppercase mb-3 ${g.featured ? "text-white/60" : "text-white/30"}`}
+              >
                 {g.tag}
               </p>
 
@@ -211,7 +294,9 @@ export default function SecuritySection() {
               </h3>
 
               {/* Desc */}
-              <p className={`text-sm leading-relaxed ${g.featured ? "text-white/75" : "text-white/40 group-hover:text-white/60 transition-colors duration-300"}`}>
+              <p
+                className={`text-sm leading-relaxed ${g.featured ? "text-white/75" : "text-white/40 group-hover:text-white/60 transition-colors duration-300"}`}
+              >
                 {g.desc}
               </p>
 

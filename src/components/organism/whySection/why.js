@@ -66,7 +66,7 @@ export default function WhyUsSection() {
     <>
       <EfficiencyParallax />
 
-      <section className="mt-[-120px] bg-neutral-950 text-white py-28 px-6">
+      <section className="mt-[-120px]  text-white py-28 px-6">
         <div className="max-w-6xl mx-auto text-center relative">
           {/* TITLE */}
           <label className="text-sm text-neutral-400">WHY US</label>
