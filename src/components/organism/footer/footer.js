@@ -137,12 +137,6 @@ export default function Footer() {
             © {new Date().getFullYear()} Zestify. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
-            {/* Twitter/X */}
-            <a href="#" aria-label="Twitter" className="text-neutral-600 hover:text-neutral-300 transition-colors duration-200">
-              <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                <path d="M17.316 2H14.81l-4.28 5.478L6.187 2H1l6.862 9.656L1.392 18h2.505l4.62-5.916L12.916 18H18l-7.14-10.043L17.316 2zm-2.43 14.4-9.7-13.2h1.624l9.7 13.2h-1.624z"/>
-              </svg>
-            </a>
             {/* LinkedIn */}
             <a href="#" aria-label="LinkedIn" className="text-neutral-600 hover:text-neutral-300 transition-colors duration-200">
               <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">

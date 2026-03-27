@@ -93,7 +93,7 @@ export default function Navigation() {
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) {
     return (
-      <nav className="navbar z-[9999] fixed top-4 left-1/2 -translate-x-1/2 px-3 sm:px-4 w-[95%] sm:w-[90%] md:w-[85%] xl:w-[80%] max-w-7xl backdrop-blur-md bg-[#0b0b0b46] border border-white/10 rounded-full shadow-lg min-h-[70px] py-2">
+      <nav className="navbar z-[9996] fixed top-4 left-1/2 -translate-x-1/2 px-3 sm:px-4 w-[95%] sm:w-[90%] md:w-[85%] xl:w-[80%] max-w-7xl backdrop-blur-md bg-[#0b0b0b46] border border-white/10 rounded-full shadow-lg min-h-[70px] py-2">
         <div className="navbar-start flex items-center gap-2">
           <div className="2xl:hidden w-10 h-10"></div>
           <Link href="/">

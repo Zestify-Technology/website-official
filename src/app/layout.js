@@ -60,6 +60,7 @@ export default function RootLayout({ children }) {
         className={`${montserrat.variable} antialiased bg-black relative  overflow-x-hidden`}
       >
         <JsonLd data={organizationData} />
+         <SpeedInsights />
         {children}
       </body>
     </html>

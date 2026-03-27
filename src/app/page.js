@@ -1,6 +1,7 @@
 import GradualBlurMemo from "@/components/atoms/animation/gradual blur/gradualblur";
 import Orb from "@/components/atoms/background/orb";
 import JsonLd from "@/components/atoms/JsonLd";
+import IconFAB from "@/components/molecules/fab/fab";
 import Navbar from "@/components/molecules/navbar/navbar";
 import FaqSection from "@/components/organism/faqSection/faq";
 import Footer from "@/components/organism/footer/footer";
@@ -12,8 +13,7 @@ import WhyUsSection from "@/components/organism/whySection/why";
 import WorkflowSection from "@/components/organism/workflowSection/workflow";
 import Main from "@/components/template/mainSection/main";
 import Image from "next/image";
-import Overlay from "@/components/template/overlay/overlay";
-import FAB from "@/components/molecules/fab/fab";
+
 
 export const metadata = {
   title: "Agensi Teknologi Penerapan AI",
@@ -41,9 +41,9 @@ export default function Home() {
         tetap benar. Scroll sekarang terjadi di window → sticky bekerja.
       */}
       <div>
-        <FAB />
         {/* NAVBAR */}
         <Navbar />
+        <IconFAB/>
 
         {/* BACKGROUND ORB */}
         <div className="h-screen absolute lg:translate-y-[0px] opacity-70 w-full">

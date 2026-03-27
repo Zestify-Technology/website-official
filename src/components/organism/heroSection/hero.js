@@ -19,7 +19,7 @@ export default function HeroSection() {
         </Paragraph>
 
         <div className="flex justify-center gap-10">
-          <GradientButton href="/pusat-layanan/pengajuan">
+          <GradientButton href="/eksperimen">
             Ajukan Eksperimental
           </GradientButton>
         </div>
