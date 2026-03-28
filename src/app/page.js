@@ -43,10 +43,10 @@ export default function Home() {
       <div>
         {/* NAVBAR */}
         <Navbar />
-        <IconFAB/>
+           <IconFAB/>
 
         {/* BACKGROUND ORB */}
-        <div className="h-screen absolute lg:translate-y-[0px] opacity-70 w-full">
+        <div className="h-screen absolute lg:translate-y-[0px] opacity-60 w-full">
           <Orb
             hoverIntensity={2}
             rotateOnHover

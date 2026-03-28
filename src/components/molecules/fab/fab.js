@@ -35,12 +35,12 @@ function Overlay({ isOpen, onClose, children }) {
   return (
     <section
       className={`
-        fixed z-[9999] inset-0 mx-auto no-scrollbar
+        fixed z-[9999] inset-0 mx-auto no-scrollbar border-none
         w-full h-full rounded-none
         lg:right-48 lg:left-auto lg:top-1/2 lg:-translate-y-1/2
         lg:w-[30%] lg:h-[700px] lg:rounded-2xl lg:mx-0
         overflow-y-auto
-        bg-[#000000] border border-[#393939]
+        bg-[#000000] lg:border lg:border-[#393939]
         transition-all duration-300
         ${isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-95"}
       `}
@@ -116,7 +116,7 @@ const IconFAB = () => {
     <>
       {/* ── FAB ── */}
       <div
-        className={`fab fixed right-4 bottom-14 lg:bottom-20 lg:right-9 z-[9997] ${
+        className={`fab fixed right-7 bottom-20 transform-gpu will-change-transform [backface-visibility:hidden] lg:bottom-20 lg:right-9 z-[9997] ${
           fabOpen ? "fab-open" : ""
         }`}
       >

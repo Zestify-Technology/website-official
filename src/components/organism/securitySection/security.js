@@ -205,9 +205,9 @@ export default function SecuritySection() {
         <div
           className={`flex flex-col justify-center items-center text-center mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <div className="w-[70%]">
+          <div className="w-full">
             <H2 align="center">
-              Kami Bekerja dengan Data Anda —{" "}
+              Kami Bekerja dengan Data Anda {" "}
               <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
                 Bukan Memilikinya
               </span>

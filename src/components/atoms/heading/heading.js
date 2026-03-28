@@ -37,7 +37,7 @@ export function H2({ align = "left", children, className = "" }) {
   return (
     <h2
       className={`
-        text-xl text-white
+        text-3xl text-white
         md:text-4xl 
         font-bold 
         ${alignmentClass} 

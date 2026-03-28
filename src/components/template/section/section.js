@@ -1,11 +1,20 @@
+const heightMap = {
+  screen: "min-h-screen",
+  full: "min-h-full",
+  dvh: "min-h-[100dvh]",
+};
+
 export default function Section({
   children,
   className,
   id,
-  height = "screen",
+  height = "dvh",
 }) {
   return (
-    <section id={id} className={`min-h-${height} relative ${className || ""}`}>
+    <section
+      id={id}
+      className={`${heightMap[height]} overflow-hidden relative ${className || ""}`}
+    >
       {children}
     </section>
   );

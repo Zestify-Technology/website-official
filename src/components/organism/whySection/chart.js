@@ -124,7 +124,7 @@ const EfficiencyParallax = () => {
           {/* Heading */}
           <motion.div
             style={{ opacity: headingOpacity, y: headingY }}
-            className="mx-auto pb-18 w-[70%] flex flex-col justify-center items-center"
+            className="mx-auto pb-18 w-[90%] flex flex-col justify-center items-center"
           >
             <H2 align="center">
               <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">

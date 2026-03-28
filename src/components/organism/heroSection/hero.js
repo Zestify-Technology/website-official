@@ -5,7 +5,7 @@ import Section from "@/components/template/section/section";
 
 export default function HeroSection() {
   return (
-    <Section className="min-h-screen flex flex-col justify-center items-center">
+    <Section className="flex flex-col justify-center items-center">
       <div
         className="
             w-[80%] md:w-[39%] inset-0 flex flex-col gap-4
