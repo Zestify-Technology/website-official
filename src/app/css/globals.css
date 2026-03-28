@@ -1,31 +1,24 @@
 /* INITIAL */
 @import "tailwindcss";
-@plugin "daisyui";
 @plugin "@tailwindcss/typography";
+@plugin "daisyui";
 
 /* VARIABLE */
 :root {
   --background: #000000;
-  --foreground: #ffffff;
-  color-scheme: dark;
-}
-
-/* TEMA */
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
 }
 
 html,
 body {
   scroll-behavior: smooth;
+}
+
+html {
+  color-scheme: dark;
 }
 
 /* global.css */

@@ -125,7 +125,7 @@ const IconFAB = () => {
           tabIndex={0}
           role="button"
           onClick={() => setFabOpen((v) => !v)}
-          className="btn outline-none btn-lg btn-circle bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 backdrop-blur-md text-white hover:scale-105 transition cursor-pointer"
+          className="btn border-none btn-lg btn-circle bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 backdrop-blur-md text-white hover:scale-105 transition cursor-pointer"
         >
           {fabOpen ? (
             <span className="text-xl font-bold">✕</span>
@@ -141,7 +141,7 @@ const IconFAB = () => {
           WhatsApp{" "}
           <button
             onClick={handleWhatsApp}
-            className="btn btn-lg btn-circle bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500"
+            className="btn border-none text-white btn-lg btn-circle bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500"
           >
             <FaWhatsapp size={24} />
           </button>
@@ -152,7 +152,7 @@ const IconFAB = () => {
           Zestify AI{" "}
           <button
             onClick={() => openOverlay("ai")}
-            className="btn btn-lg btn-circle bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500"
+            className="btn border-none btn-lg btn-circle bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path
@@ -171,7 +171,7 @@ const IconFAB = () => {
           Community{" "}
           <button
             onClick={() => openOverlay("form")}
-            className="btn btn-lg btn-circle bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500"
+            className="btn border-none text-white btn-lg btn-circle bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500"
           >
             <MdForum size={24} />
           </button>

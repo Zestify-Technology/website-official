@@ -3,7 +3,7 @@ import "dotenv/config";
 import Groq from "groq-sdk";
 import path from "path";
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY});
 
 let conversationHistory = [];
 
@@ -44,7 +44,7 @@ export async function POST(req) {
 
     const modelList = [
       "openai/gpt-oss-120b",
-      "whisper-large-v3-turbo", // ini versi lebih ringan & stabil
+      "meta-llama/llama-4-scout-17b-16e-instruct",
     ];
 
     let completion;
@@ -80,6 +80,7 @@ export async function POST(req) {
       role: "assistant",
       content: modelReply,
     });
+
 
     // Create streaming response with typing animation
     const encoder = new TextEncoder();

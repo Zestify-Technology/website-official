@@ -1,6 +1,8 @@
 "use client";
 
+import Paragraph from "@/components/atoms/paragraph/paragraph";
 import { useState } from "react";
+
 
 export default function CommunityComingSoon() {
   const [email, setEmail] = useState("");
@@ -86,10 +88,10 @@ export default function CommunityComingSoon() {
 
           {/* Description */}
           <div className="fade-up-3">
-            <p className="text-white/40 text-[0.8rem] leading-relaxed">
+            <Paragraph>
               Ruang bagi para tech enthusiast untuk berbagi, belajar, dan tumbuh bersama —
               diskusi, insight, dan kolaborasi nyata dalam satu ekosistem.
-            </p>
+            </Paragraph>
           </div>
 
           {/* Feature list */}
@@ -119,7 +121,7 @@ export default function CommunityComingSoon() {
 
           {/* Notify form */}
           <div className="fade-up-4">
-            <p className="mb-2 text-[0.7rem] text-white/30">
+            <p>
               Daftarkan email untuk notifikasi
             </p>
             {!submitted ? (

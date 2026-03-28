@@ -146,7 +146,7 @@ export default function WorkflowSection() {
                   {/* Description - ABSOLUTE POSITION, does NOT affect layout height */}
                   <div className="relative">
                     <p
-                      className={`absolute left-0 right-0 text-sm text-neutral-500 leading-relaxed transition-all duration-500 ${
+                      className={`absolute left-0 right-0 text-sm text-[#c9c9c9] leading-relaxed transition-all duration-500 ${
                         activeStep === i
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-2"

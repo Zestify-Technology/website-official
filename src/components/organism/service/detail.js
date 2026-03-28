@@ -2,7 +2,7 @@ import "@/app/css/globals.css";
 
 export default function Efficiency() {
   return (
-    <article className="prose prose-sm max-w-none px-4 py-6 mx-auto dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
+    <article>
       <div className="space-y-5">
         <section>
           <h2>Scope Masalah yang Diselesaikan</h2>
@@ -97,7 +97,7 @@ export default function Efficiency() {
 
 export function IntegratedBusinessSystem() {
   return (
-    <article className="prose prose-sm max-w-none px-4 py-6 mx-auto dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
+    <article>
       <div className="space-y-5">
         <section>
           <h2>Scope Masalah yang Diselesaikan</h2>
@@ -216,7 +216,7 @@ export function IntegratedBusinessSystem() {
 
 export   function AIWorkflow() {
   return (
-    <article className="prose prose-sm max-w-none px-4 py-6 mx-auto dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
+    <article>
       <div className="space-y-5">
         <section>
           <h2>Scope Masalah yang Diselesaikan</h2>
@@ -333,7 +333,7 @@ export   function AIWorkflow() {
 
 export function AIAgent() {
   return (
-    <article className="prose prose-sm max-w-none px-4 py-6 mx-auto dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-strong:text-gray-900 dark:prose-strong:text-white">
+    <article>
       <div className="space-y-5">
         <section>
           <h2>Scope Masalah yang Diselesaikan</h2>

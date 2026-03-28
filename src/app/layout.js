@@ -55,9 +55,9 @@ const organizationData = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${montserrat.variable} antialiased bg-black relative  overflow-x-hidden`}
+        className={`${montserrat.variable} antialiased bg-[#0a0a0a] text-white relative  overflow-x-hidden`}
       >
         <JsonLd data={organizationData} />
          <SpeedInsights />

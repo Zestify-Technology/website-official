@@ -294,11 +294,11 @@ export default function SecuritySection() {
               </h3>
 
               {/* Desc */}
-              <p
-                className={`text-sm leading-relaxed ${g.featured ? "text-white/75" : "text-white/40 group-hover:text-white/60 transition-colors duration-300"}`}
+              <Paragraph fontSize="sm" color={g.featured ? 'white' : ''}
+                
               >
                 {g.desc}
-              </p>
+              </Paragraph>
 
               {/* Featured decoration */}
               {g.featured && (

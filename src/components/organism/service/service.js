@@ -104,9 +104,11 @@ export default function ServicesSection() {
   return (
     <>
       {/* Overlay with isOpen prop */}
-      <Overlay onClose={handleCloseOverlay} isOpen={openOverlay}>
-        {ActiveDetailComponent && <ActiveDetailComponent />}
-      </Overlay>
+      <div className="prose prose-sm max-w-none px-4 py-6 mx-auto  prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white prose-ul:text-[#9e9e9e] prose-p:text-[#9e9e9e]  prose-strong:text-white prose-ul:marker:text-white">
+        <Overlay onClose={handleCloseOverlay} isOpen={openOverlay}>
+          {ActiveDetailComponent && <ActiveDetailComponent />}
+        </Overlay>
+      </div>
 
       <Section id="solution" className="py-28 px-6">
         {/* Background Pattern */}
@@ -189,6 +191,7 @@ export default function ServicesSection() {
                     {service.title}
                   </H3>
                   <Paragraph
+                  color={service.featured ? 'white' : ''}
                     fontSize="sm"
                     className={`flex-1 transition-colors duration-300 mb-4 ${service.featured ? "text-white/70" : "text-white/40 group-hover:text-white/60"}`}
                   >

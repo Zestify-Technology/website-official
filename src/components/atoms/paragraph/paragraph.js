@@ -2,13 +2,13 @@ export default function Paragraph({
   children,
   align,
   fontSize = "base",
-  color = "#9e9e9e",
+  color = "#c9c9c9",
 }) {
   return (
     <>
       <p
         className={`
-        text-${fontSize} text-${align} text-[${color}] clas
+        text-${fontSize} text-${align} text-[${color}]  leading-relaxed
         `}
       >
         {children}
