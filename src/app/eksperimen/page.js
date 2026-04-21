@@ -212,7 +212,7 @@ const [openOverlay, setOpenOverlay] = useState(false);
   const [processRef, processInView] = useInView(0.1);
 
   return (
-    <>
+    <div suppressHydrationWarning>
       <Overlay onClose={handleCloseOverlay} isOpen={openOverlay}>
         <FormEksperimen/>
       </Overlay>
@@ -436,6 +436,6 @@ const [openOverlay, setOpenOverlay] = useState(false);
           .font-mono    { font-family: 'Space Mono', monospace; }
         `}</style>
       </main>
-    </>
+    </div>
   );
 }

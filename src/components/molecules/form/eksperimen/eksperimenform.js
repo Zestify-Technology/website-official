@@ -74,11 +74,8 @@ function StepKontak({ data, onChange, toggleSosmed }) {
     <div className="space-y-5">
       <Field label="No. WhatsApp" required>
         <div className="flex gap-2">
-          <span className="flex items-center px-3 border border-neutral-600 rounded-md text-sm text-neutral-400 bg-neutral-800/40 whitespace-nowrap">
-            🇮🇩 +62
-          </span>
           <input type="tel" name="whatsapp" value={data.whatsapp} onChange={onChange}
-            className={`${inputCls} flex-1`} placeholder="812 3456 7890" />
+            className={`${inputCls} flex-1`} placeholder="0812 3456 7890" />
         </div>
       </Field>
       <Field label="Email" required>
@@ -268,13 +265,79 @@ export default function FormEksperimen() {
     sosmed: d.sosmed.includes(s) ? d.sosmed.filter(x => x !== s) : [...d.sosmed, s]
   }));
 
-  const handleNext = async () => {
-    if (step < 4) { setStep(s => s + 1); return; }
-    setLoading(true);
-    await new Promise(r => setTimeout(r, 1800));
+const handleNext = async () => {
+  // Validasi step 1
+  if (step === 1 && (!identitas.namaPemimpin || !identitas.namaUsaha || !identitas.bidang)) {
+    alert('Mohon lengkapi data Identitas Usaha');
+    return;
+  }
+  
+  // Validasi step 2
+  if (step === 2 && (!kontak.whatsapp || !kontak.email)) {
+    alert('Mohon lengkapi data Kontak');
+    return;
+  }
+  
+  // Validasi step 3
+  if (step === 3 && !detail.alasan) {
+    alert('Mohon isi Alasan Pengajuan');
+    return;
+  }
+  
+  // Validasi step 4
+  if (step === 4 && !jadwal.tanggal) {
+    alert('Mohon pilih Tanggal Diskusi');
+    return;
+  }
+  
+  // Kalo belum step terakhir, lanjut ke step berikutnya
+  if (step < 4) {
+    setStep(s => s + 1);
+    return;
+  }
+  
+  // Step 4: Kirim data ke backend
+  setLoading(true);
+  
+  try {
+    const formData = {
+      namaPemimpin: identitas.namaPemimpin,
+      namaUsaha: identitas.namaUsaha,
+      bidang: identitas.bidang,
+      whatsapp: kontak.whatsapp,
+      email: kontak.email,
+      sosmed: kontak.sosmed,
+      sosmedHandle: kontak.sosmedHandle,
+      alasan: detail.alasan,
+      kebutuhan: detail.kebutuhan,
+      target: detail.target,
+      mode: jadwal.mode,
+      tanggal: jadwal.tanggal,
+      waktu: jadwal.waktu,
+      lokasi: jadwal.lokasi,
+      platform: jadwal.platform,
+    };
+    
+    const response = await fetch('/api/kerjasama', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+    
+    const result = await response.json();
+    
+    if (response.ok && result.success) {
+      setDone(true);
+    } else {
+      alert('Gagal mengirim: ' + (result.error || 'Terjadi kesalahan'));
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Terjadi kesalahan: ' + error.message);
+  } finally {
     setLoading(false);
-    setDone(true);
-  };
+  }
+};
 
   const handleReset = () => {
     setDone(false); setStep(1);

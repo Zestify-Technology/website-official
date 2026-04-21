@@ -1,87 +1,57 @@
 # PROFIL AGENSI  
-- **Nama Agensi:** Creativolve Agency  
-- **Didirikan:** 19 Januari 2025, Bogor (operasional full remote)  
+- **Nama Agensi:** Zestify Technology  
+- **Didirikan:** 15, February 2026 Bogor (operasional full remote)  
 - **Tentang:**  
-  Creativolve Agency adalah agensi digital yang menawarkan solusi **branding & digital berbasis budget**, tanpa mengurangi kualitas strategi. Kami berfokus pada pemanfaatan teknologi terkini untuk mengembangkan identitas digital yang unik, relevan, dan tepat sasaran.  
+  Zestify Technology adalah **AI First Technology Partner** yang berfokus pada pembangunan, integrasi, dan optimalisasi sistem digital modern. Kami membantu bisnis skala menengah (SME) bertumbuh melalui pengembangan Dashboard Custom terintegrasi, AI Agent Implementation dan MCP (Model Context Protocol) Implementation. Dengan model bisnis unik yang menggabungkan kekuatan komunitas pengembang dan agensi profesional, Zestify Tech menyediakan solusi yang efisien, scalable, dan berorientasi pada pertumbuhan jangka panjang. 
 
 ---
 
 # KONSEP UTAMA  
-**Budget-Based Customization**  
-→ Menyesuaikan layanan sesuai anggaran klien tanpa mengurangi kualitas, sehingga solusi tetap efisien dan berdampak.  
+**AI First Technology**  
+→ menjadikan kecerdasan buatan sebagai otak utama atau bagian utama dalam memecahkan masalah, bukan sekadar alat tambahan.
 
 ---
 
 # NILAI & PONDASI  
-- **Nilai Utama:** Kolaboratif, Efektif, Berkualitas, Inovatif.  
+- **Nilai Utama:** Kolaboratif, Efisien, Scalable, Inovatif.  
 - **Pondasi Agensi:**  
   1. Kolaborasi  
-  2. Budget-Based Customization  
+  2. Eksplorasi
   3. Teknologi  
 
 ---
 
 # VISI  
-Menjadi pusat solusi bisnis inovatif berbasis kreativitas digital untuk mendorong **evolusi & pertumbuhan bisnis**, serta menjadi agen transformasi digital yang mempercepat keberhasilan klien.  
+Menjadi pusat inovasi dan integrasi teknologi modern yang mendorong transformasi, efisiensi, dan pertumbuhan berkelanjutan bagi bisnis dan organisasi di berbagai sektor.  
 
 ---
 
 # MISI  
-1. Memberikan pelayanan digital profesional dengan otomatisasi yang inovatif.  
-2. Membantu bisnis berkembang melalui solusi branding & digital adaptif.  
-3. Menciptakan identitas visual yang autentik & menarik bagi audiens.  
-4. Membangun komunitas bisnis berbasis digital branding.  
-5. Mendorong adopsi teknologi berbasis data dalam strategi pemasaran.  
-6. Menghadirkan platform digital yang mendukung pertumbuhan berkelanjutan.  
-7. Memberikan edukasi digital branding & strategi bisnis modern.  
+1. Membangun solusi digital custom yang relevan, scalable, dan selaras dengan model bisnis klien.
+2. Mengintegrasikan teknologi terbaru termasuk AI dan intelligent automation untuk meningkatkan efisiensi operasional.
+3. Mengoptimalkan sistem dan proses bisnis agar lebih efektif, terukur, dan berbasis data.
+4. Mendorong transformasi digital SME melalui pendekatan strategis, bukan sekadar implementasi teknis.
+5. Mengembangkan ekosistem kolaboratif yang menggabungkan komunitas developer dan agensi profesional untuk menghasilkan inovasi berkelanjutan.
+6. Menjadi mitra pertumbuhan jangka panjang dengan fokus pada dampak bisnis yang nyata dan measurable. 
 
 ---
 
 # LAYANAN AGENSI  
-## 1. Digital Branding & Strategy (Bisnis)  
-Identitas brand berbasis riset, analisis pasar, & nilai brand.  
+## 1. Dashboard Custom Terintegrasi
+Dashboard yang mengintegrasikan berbagai tools untuk memudahkan operasional. 
 
-## 2. Desain & Editing (Umum)  
-Desain visual kreatif dan editing profesional (sosial media, promosi, event).  
+## 2. AI Agent Implementation 
+Implementasi AI Agent untuk mengotomatisasikan operasional sehingga menjadi operasional menjadi lebih efisien.
 
-### 3. Web Development (Bisnis)  
-Website responsif, modern, dengan teknologi terbaru + optimasi UX.  
+### 3. MCP (Model Context Protocol) Implementation 
+Mengimplementasikan MCP yang terintegrasi oleh berbagai tools, MCP itu versi dashboard yang lebih modern karena dukungan AI yang bisa mengakses data dan berbagai tools.
 
 ---
 
-# SKEMA HARGA UTAMA  
-## 🔹 Digital Branding  
-- **Individu:** Rp200.000 – Rp300.000  
-- **Startup/UMKM:** Rp300.000 – Rp1.000.000  
-- **Mega Bisnis:** Rp1.000.000 – Rp6.000.000 
-Sumber [Skema Harga Digital Branding](https://creativolve.agency/layanan#digital-branding)
-
-## 🔹 Desain Grafis  
-- Desain Satuan → Rp35.000 – Rp500.000 / desain  
-- Paket Modular → Rp150.000 – Rp400.000+  
-- Paket Growth → Rp1.200.000 / paket  
-- Subscription → Rp4.000.000 / bulan 
-Sumber [Skema Harga Desain Grafis](https://creativolve.agency/layanan#desain-grafis)
-
-## 🔹 Video Editing  
-- Personal → Rp70.000 (≤ 1 menit)  
-- Organisasi → Rp230.000 (3–7 menit)  
-- Business → Rp430.000 (≤ 10 menit)  
-- Add-On → Motion Graphic mulai Rp500.000 
-Sumber [Skema Harga Desain Grafis](https://creativolve.agency/layanan#editing-video) 
-
-##🔹 Web Development  
-- Individu → Rp200.000 + domain .my.id  
-- Startup → Rp800.000 + domain .com + hosting  
-- Mega Bisnis → Rp3.000.000 (company profile lengkap)  
-- E-commerce → Rp10.000.000  
-- Maintenance → Rp400.000 / bulan  
-- Add-On Integrasi API → Rp900.000 – Rp4.000.000 
-Sumber [Skema Harga Desain Grafis](https://creativolve.agency/layanan#web-development)  
 
 
 ## Catatan :
-Sebelum memilih paket atau layanan desain, konsultasikan terlebih dahulu kebutuhan Anda. Dengan begitu, tim Creativolve Agency dapat:
+Sebelum memilih paket atau layanan desain, konsultasikan terlebih dahulu kebutuhan Anda. Dengan begitu, tim Zestify Technology dapat:
 • Memahami tujuan dan prioritas Anda.
 • Menyusun layanan yang paling relevan.
 • Memberikan penawaran kustom sesuai anggaran dan kebutuhan.
@@ -89,18 +59,16 @@ Jadi, apapun kebutuhan digital Anda, jangan ragu untuk berdiskusi lebih dulu den
 ---
 
 # KEUNIKAN  
-1. Fleksibilitas sesuai budget.  
-2. Konsultasi strategi berbasis data.  
-3. Pendampingan brand end-to-end.  
-4. Solusi skalabel sesuai pertumbuhan bisnis.  
+1. Contextual AI via MCP - Terhubung langsung kedata klien sehingga AI menjawab akurat sesuai data.  
+2. Vertical Focus - Zestify tidak memberikan solusi yang umum melainkan solusi yang fokus menyelesaikan masalah tersebut.  
+3. Domain Expertise - Pemahaman mendalam terhadap masalah sehingga Zestify dapat merancang workflow yang spesifik untuk cara kerja industri berbagai sektor di Indonesia. 
 
 ---
 
 # ALASAN MEMILIH KAMI  
-- **Fleksibel Sesuai Budget** – solusi tanpa mengorbankan kualitas.  
-- **Layanan Lengkap** – branding, desain, marketing, SEO, hingga web dev.  
-- **Kolaboratif** – bekerja erat dengan klien untuk hasil terbaik.  
-- **Solusi Jangka Panjang** – mendukung pertumbuhan berkelanjutan.  
+- **Paham Konteks Lokal** – Dibangun untuk workflow, bahasa dam regulasi di Indonesia.  
+- **Contextual** – Terhubung langsung ke dalam data klien.  
+- **Arsitektur yang Scalable** – Bisa berkembang seiring kebutuhan klien.  
 
 ---
 
@@ -151,16 +119,3 @@ Jadi, apapun kebutuhan digital Anda, jangan ragu untuk berdiskusi lebih dulu den
 - **Founder:** M. Adnan Fauzan Maulana – Developer & Business Development  
 - **Co-Founder:** Setya Himawan – Digital Marketing & Finance 
 
----
-
-# PARTNERSHIP  
-- **Gdev ID** → komunitas teknologi yang berkolaborasi dalam pengembangan sistem & inovasi agensi.  
-- Terbuka untuk partnership dan kolaborasi membangun ekosistem agensi digital kreatif & teknologi.  
-
----
-
-# TEKNOLOGI  
-- **AI & RAG (Retrieval-Augmented Generation)** dengan **Llama 4 Maverick (Meta)** via **Groq Cloud API**.  
-- **Produk Internal:**  
-  1. **C.O.R.A (Creativolve Operations & Response Assistant)** – chatbot cerdas untuk operasional & klien.  
-  2. **BRIFAI** – sistem penyusunan brief interaktif berbasis AI.  
