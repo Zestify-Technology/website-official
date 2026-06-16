@@ -1,0 +1,24 @@
+/* 1. Put the Google Font import first */
+@import url('https://fonts.googleapis.com/css2?family=Convergence&display=swap');
+
+/* 2. Then the Tailwind bundle */
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-convergence: 'Convergence', sans-serif;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  /* You can add your custom font here too */
+  --font-convergence: 'Convergence', sans-serif;
+}
+
+body {
+  background-color: #0C0C0C;
+}

@@ -1,85 +1,51 @@
-import GradualBlurMemo from "@/components/atoms/animation/gradual blur/gradualblur";
-import Orb from "@/components/atoms/background/orb";
-import JsonLd from "@/components/atoms/JsonLd";
-import IconFAB from "@/components/molecules/fab/fab";
+import SideRays from "@/components/animation/siderays";
+import Footer from "@/components/molecules/footer/footer";
 import Navbar from "@/components/molecules/navbar/navbar";
-import FaqSection from "@/components/organism/faqSection/faq";
-import Footer from "@/components/organism/footer/footer";
-import HeroSection from "@/components/organism/heroSection/hero";
-import SecuritySection from "@/components/organism/securitySection/security";
-import ServicesSection from "@/components/organism/service/service";
-import TechStack from "@/components/organism/techstack/techstack";
-import WhyUsSection from "@/components/organism/whySection/why";
-import WorkflowSection from "@/components/organism/workflowSection/workflow";
-import Main from "@/components/template/mainSection/main";
-import Image from "next/image";
+import HomeHeroSection from "@/components/organism/home_section";
+import LayananSection from "@/components/organism/layanan_section";
+import ProblemSection from "@/components/organism/problem_section";
+import SumberSection from "@/components/organism/sumber_section";
+import TechStack from "@/components/organism/techstack";
+import TentangSection from "@/components/organism/tentang_section";
+import Main from "@/components/template/tagHTML/main";
 
 
-export const metadata = {
-  title: "Agensi Teknologi Penerapan AI",
-  description:
-    "Kami membangun ekosistem teknologi berbasis AI untuk efisiensi bisnis Anda. Satu sistem cerdas yang mampu menghadirkan ribuan solusi digital otomatis dan tepat guna.",
-};
 
-const websiteData = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Zestify",
-  url: "https://zestify.my.id",
-};
-
-// HALAMAN LANDING PAGE PERUSAHAAN
 export default function Home() {
   return (
     <>
-      <JsonLd data={websiteData} />
-      {/*
-        SEBELUM: overflowY: "auto" → sticky mati total karena
-        scroll terjadi di dalam div ini, bukan di window.
+      {/* Background Glow Effect */}
 
-        SESUDAH: hapus overflowY, pakai minHeight agar layout
-        tetap benar. Scroll sekarang terjadi di window → sticky bekerja.
-      */}
-      <div>
-        {/* NAVBAR */}
+      <header>
         <Navbar />
-           <IconFAB/>
+      </header>
 
-        {/* BACKGROUND ORB */}
-        <div className="h-screen absolute lg:translate-y-[0px] opacity-60 w-full">
-          <Orb
-            hoverIntensity={2}
-            rotateOnHover
-            hue={0}
-            forceHoverState={false}
-            backgroundColor="#000000"
+      {/* Tambahkan padding top agar tidak tertutup Navbar Fixed */}
+      <Main className="pt-24 flex flex-col gap-20">
+        <div className="-z-10 w-full mh-screen absolute right-0 top-0 pointer-events-none">
+          <SideRays
+            speed={2.5}
+            rayColor1="#0ea7ff"
+            rayColor2="#98a6ff"
+            intensity={2}
+            spread={2}
+            origin="top-right"
+            tilt={0}
+            saturation={1.5}
+            blend={0.75}
+            falloff={1.6}
+            opacity={1}
           />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0C0C0C] to-transparent pointer-events-none z-10" />
         </div>
-
-        {/* BAGIAN ISI */}
-        <Main>
-          <HeroSection />
-          <TechStack />
-          <div id="mengapa-kami" className="py-40">
-            <WhyUsSection />
-          </div>
-          <ServicesSection />
-          <WorkflowSection />
-          <SecuritySection />
-          <FaqSection />
-        </Main>
-        <Footer />
-      </div>
-
-      <GradualBlurMemo
-        target="page"
-        position="bottom"
-        height="7rem"
-        strength={3.5}
-        divCount={2}
-        curve="bezier"
-        opacity={1}
-      />
+        <HomeHeroSection />
+        <TechStack />
+        <ProblemSection />
+        <TentangSection/>
+        <LayananSection/>
+        <SumberSection/>
+      </Main>
+      <Footer/>
     </>
   );
 }
