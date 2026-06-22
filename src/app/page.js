@@ -2,6 +2,7 @@ import SideRays from "@/components/animation/siderays";
 import Footer from "@/components/molecules/footer/footer";
 import Navbar from "@/components/molecules/navbar/navbar";
 import HomeHeroSection from "@/components/organism/home_section";
+import KlienSection from "@/components/organism/klien_section";
 import LayananSection from "@/components/organism/layanan_section";
 import ProblemSection from "@/components/organism/problem_section";
 import SumberSection from "@/components/organism/sumber_section";
@@ -44,6 +45,7 @@ export default function Home() {
         <TentangSection/>
         <LayananSection/>
         <SumberSection/>
+        <KlienSection/>
       </Main>
       <Footer/>
     </>

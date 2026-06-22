@@ -146,7 +146,7 @@ function PricingCard({ service }) {
 
 export default function PricingCardsGrid() {
   return (
-    <div className="px-6 py-16">
+    <div className="w-full py-16">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {services.map((service) => (
           <PricingCard key={service.id} service={service} />

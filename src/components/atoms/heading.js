@@ -7,9 +7,9 @@ const Heading = ({ level = 1, children, className = "" }) => {
   const baseStyles = "text-gray-900 dark:text-white";
   const sizeStyles = {
     1: "text-4xl md:text-6xl",
-    2: "text-xl md:text-4xl",
+    2: "text-xl md:text-5xl",
     3: "text-2xl md:text-3xl",
-    4: "text-xl md:text-2xl",
+    5: "text-3xl md:text-[4vw]",
   };
 
   return (

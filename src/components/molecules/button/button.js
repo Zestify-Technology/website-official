@@ -2,6 +2,7 @@
 
 import ShinyText from "@/components/animation/shinnytext";
 import { Home } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
@@ -52,10 +53,12 @@ export function WhiteButton({ children = "Button", onClick, className = "" }) {
 }
 
 // ── Button 3: Glass Style with Icon ─────────────────────────────────────────
-export function GlassButton({ children = "Kembali", icon: Icon = Home, onClick, className = "" }) {
+export function GlassButton({ href = '/' ,children = "Kembali", icon: Icon = Home, onClick, className = "" }) {
+  const router = useRouter()
+
   return (
     <button
-      onClick={onClick}
+      onClick={() => router.push(href)}
       className={`
         relative w-full sm:w-fit md:min-w-[220px] px-5 py-2.5 sm:px-6 sm:py-3
         inline-flex items-center justify-center sm:justify-start gap-3

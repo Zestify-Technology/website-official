@@ -1,13 +1,17 @@
-
+"use client"
 import Section from "../template/tagHTML/section"
 import Paragraph from "../atoms/paragraph"
 import Heading from "../atoms/heading"
 import Label from "../atoms/labels"
 import { BlueButton } from "../molecules/button/button"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
+
 
 
 export default function TentangSection(){
+const router = useRouter()
+
     return(
         // Tambahkan props direction="col" di sini, hapus className="flex"
         <section className="w-full min-h-screen flex flex-col lg:flex-row gap-10 justify-center items-center"> 
@@ -28,7 +32,7 @@ export default function TentangSection(){
                 <Paragraph>
                     Zestify menghubungkan AI ke sistem operasional bisnis kamu sebagai inti cara kerja.
                 </Paragraph>
-                <BlueButton>
+                <BlueButton onClick={() => router.push('/tentang')}>
                     Selengkapnya
                 </BlueButton>
             </div>
