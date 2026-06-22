@@ -30,9 +30,11 @@ export default function TentangPage() {
           <div className="Image lg:w-1/2 flex justify-center items-center">
             <Image
               src="/tentang page/hero_section.svg"
-              width={1000}
-              height={1000}
-              alt="Image w-full "
+              width={700}
+              height={700}
+              priority
+              alt="Image"
+              className="w-full"
             />
           </div>
         </Section>
