@@ -33,7 +33,6 @@ export default function TentangPage() {
               width={1000}
               height={1000}
               alt="Image w-full "
-              loading="eager"
             />
           </div>
         </Section>
