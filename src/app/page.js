@@ -8,6 +8,7 @@ import ProblemSection from "@/components/organism/problem_section";
 import SumberSection from "@/components/organism/sumber_section";
 import TechStack from "@/components/organism/techstack";
 import TentangSection from "@/components/organism/tentang_section";
+import WorkflowSection from "@/components/organism/workflow_section";
 import Main from "@/components/template/tagHTML/main";
 
 
@@ -23,7 +24,7 @@ export default function Home() {
 
       {/* Tambahkan padding top agar tidak tertutup Navbar Fixed */}
       <Main className="pt-24 flex flex-col gap-20">
-        <div className="-z-10 w-full mh-screen absolute right-0 top-0 pointer-events-none">
+        <div className="z-1 w-full mh-screen absolute right-0 top-0 pointer-events-none">
           <SideRays
             speed={2.5}
             rayColor1="#0ea7ff"
@@ -44,6 +45,7 @@ export default function Home() {
         <ProblemSection />
         <TentangSection/>
         <LayananSection/>
+        <WorkflowSection/>
         <SumberSection/>
         <KlienSection/>
       </Main>

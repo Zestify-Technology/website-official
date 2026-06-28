@@ -4,7 +4,7 @@ const Heading = ({ level = 1, children, className = "" }) => {
   const Tag = `h${level}`;
 
   // Definisikan style berdasarkan level heading
-  const baseStyles = "text-gray-900 dark:text-white";
+  const baseStyles = "text-white dark:text-white";
   const sizeStyles = {
     1: "text-4xl md:text-6xl",
     2: "text-xl md:text-5xl",

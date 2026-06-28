@@ -28,9 +28,9 @@ export default function SumberSection(){
                 <Paragraph>
                      Zestify bukan hanya tentang deploy sistem AI. Kami membangun ekosistem — tempat bisnis, developer, dan ide bertemu, berkembang, dan saling mendorong maju.
                 </Paragraph>
-                <BlueButton>
+                {/* <BlueButton>
                     Selengkapnya
-                </BlueButton>
+                </BlueButton> */}
             </div>
         </section>
     )

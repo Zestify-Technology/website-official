@@ -14,9 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${manrope} h-full antialiased`}
+      className={`${manrope} scrollbar-hidden scrollbar-hide  h-full antialiased`}
     >
-      <body className="min-h-full relative flex flex-col">{children}</body>
+      <body className="scrollbar-hidden scrollbar-hide min-h-full relative flex flex-col">{children}</body>
     </html>
   );
 }

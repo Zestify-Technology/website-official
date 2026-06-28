@@ -27,8 +27,8 @@ export default function HomeHeroSection() {
         </Paragraph>
       </div>
       <div className="flex w-full flex-col sm:flex-row items-center justify-center gap-4 lg:space-x-10">
-        <BlueButton>zesAI Chat</BlueButton>
-        <WhiteButton>Konsultasi</WhiteButton>
+        <BlueButton href="/zesAI-chat">zesAI Chat</BlueButton>
+        {/* <WhiteButton>Konsultasi</WhiteButton> */}
       </div>
     </Section>
   );

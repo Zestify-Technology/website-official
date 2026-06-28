@@ -5,12 +5,21 @@ import { Home } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
 // ── Button 1: Blue Gradient ──────────────────────────────────────────────────
-export function BlueButton({ children = "Button", onClick, className = "" }) {
+export function BlueButton({ children = "Button", href, onClick, className = "" }) {
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    if (href) {
+      router.push(href);
+    } else if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={`
         relative w-full sm:w-fit md:min-w-[180px] px-6 py-2.5 sm:px-8 sm:py-3
         rounded-xl font-semibold text-white text-sm sm:text-base tracking-wide
@@ -30,10 +39,20 @@ export function BlueButton({ children = "Button", onClick, className = "" }) {
 }
 
 // ── Button 2: White / Outlined ───────────────────────────────────────────────
-export function WhiteButton({ children = "Button", onClick, className = "" }) {
+export function WhiteButton({ children = "Button", href, onClick, className = "" }) {
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    if (href) {
+      router.push(href);
+    } else if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={`
         relative w-full sm:w-fit md:min-w-[180px] px-6 py-2.5 sm:px-8 sm:py-3
         rounded-xl font-semibold text-gray-700 text-sm sm:text-base tracking-wide
@@ -53,14 +72,22 @@ export function WhiteButton({ children = "Button", onClick, className = "" }) {
 }
 
 // ── Button 3: Glass Style with Icon ─────────────────────────────────────────
-export function GlassButton({ href = '/' ,children = "Kembali", icon: Icon = Home, onClick, className = "" }) {
-  const router = useRouter()
+export function GlassButton({ href = '/', children = "Kembali", icon: Icon = Home, onClick, className = "" }) {
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    if (href) {
+      router.push(href);
+    } else if (onClick) {
+      onClick(e);
+    }
+  };
 
   return (
     <button
-      onClick={() => router.push(href)}
+      onClick={handleClick}
       className={`
-        relative w-full sm:w-fit md:min-w-[220px] px-5 py-2.5 sm:px-6 sm:py-3
+        relative px-5 py-2.5 sm:px-6 sm:py-3
         inline-flex items-center justify-center sm:justify-start gap-3
         rounded-full font-medium text-gray-200 text-sm sm:text-base tracking-wide
         bg-white/10 backdrop-blur-md
@@ -73,6 +100,13 @@ export function GlassButton({ href = '/' ,children = "Kembali", icon: Icon = Hom
         cursor-pointer
         ${className}
       `}
+      style={{
+        background: "rgba(255,255,255,0.07)",
+        border: "1px solid rgba(255,255,255,0.15)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        boxShadow: "0 2px 16px rgba(0,0,0,0.3)",
+      }}
     >
       <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/15 backdrop-blur-sm border border-white/25 flex items-center justify-center flex-shrink-0">
         <Icon size={14} className="sm:size-4" strokeWidth={2} />

@@ -3,6 +3,19 @@
 
 /* 2. Then the Tailwind bundle */
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui";
+@plugin "tailwind-scrollbar-hide";
+
+/* --- TAMBAHKAN CUSTOM UTILITY DI SINI --- */
+@utility scrollbar-hidden {
+  -ms-overflow-style: none;  /* IE dan Edge */
+  scrollbar-width: none;     /* Firefox */
+  
+  &::-webkit-scrollbar {
+    display: none;           /* Chrome, Safari, dan Opera */
+  }
+}
 
 :root {
   --background: #ffffff;
@@ -15,7 +28,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  /* You can add your custom font here too */
   --font-convergence: 'Convergence', sans-serif;
 }
 

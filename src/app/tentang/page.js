@@ -18,24 +18,14 @@ export default function TentangPage() {
           <GlassButton href="/" />
         </div>
         <Section className="lg:p-28 lg:flex-row space-y-10">
-          <div className="lg:w-1/2 space-y-8">
-            <Heading level={1}>Tentang Kami</Heading>
-            <Paragraph>
+          <div className="lg:w-3xl space-y-8">
+            <Heading level={1} className="text-center">Tentang Kami</Heading>
+            <Paragraph className="text-center">
               Zestify adalah sebuah AI-Services & Technology Company yang
               membantu bisnis dan organisasi di Indonesia mengintegrasikan AI ke
               dalam sistem operasional nyata mereka dari otomatisasi workflow
               hingga deployment sistem manajemen berbasis AI.
             </Paragraph>
-          </div>
-          <div className="Image lg:w-1/2 flex justify-center items-center">
-            <Image
-              src="/tentang page/hero_section.svg"
-              width={700}
-              height={700}
-              priority
-              alt="Image"
-              className="w-full"
-            />
           </div>
         </Section>
 

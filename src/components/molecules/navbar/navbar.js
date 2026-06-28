@@ -16,6 +16,7 @@ const NAV_LINKS = [
   { label: "Masalah", href: "#masalah" },
   { label: "Tentang Kami", href: "#tentang" },
   { label: "Layanan", href: "#layanan" },
+  { label: "Workflow", href: "#workflow" },
   { label: "Sumber Daya", href: "#sumber" },
   { label: "Klien", href: "#klien" },
 ];
