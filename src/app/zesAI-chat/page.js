@@ -1,14 +1,13 @@
 "use client";
 
+import ShinyText from "@/components/animation/shinnytext";
 import SideRays from "@/components/animation/siderays";
 import Heading from "@/components/atoms/heading";
 import Label from "@/components/atoms/labels";
 import Paragraph from "@/components/atoms/paragraph";
 import { GlassButton } from "@/components/molecules/button/button";
 import AIMessage from "@/components/organism/zesAI/typografi_porse";
-import { useState, useEffect, useRef, useCallback } from "react"; // 1. Ditambahkan useCallback di sini
-
-
+import { useState, useEffect, useRef, useCallback } from "react";
 
 function SendIcon() {
   return (
@@ -28,72 +27,39 @@ function SendIcon() {
   );
 }
 
-// ── Main Page ─────────────────────────────────────────────────────────────────
 export default function ZesAI() {
   const [question, setQuestion] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [streamingMessageId, setStreamingMessageId] = useState(null); // ← ID unik pesan yang sedang di-stream
   const [messages, setMessages] = useState([]);
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
-  const [isUserScrolledUp, setIsUserScrolledUp] = useState(false);
+  const [chatHistory, setChatHistory] = useState([]);
 
   const textareaRef = useRef(null);
   const messagesContainerRef = useRef(null);
-  const topRef = useRef(null);
-  const scrollCheckTimeout = useRef(null);
-  const isUserScrolling = useRef(false);
   const lastScrollPosition = useRef(0);
 
   const checkScrollPosition = useCallback(() => {
     const container = messagesContainerRef.current;
     if (!container) return;
-
-    const { scrollTop, scrollHeight, clientHeight } = container;
-    const isAtBottom = scrollHeight - scrollTop - clientHeight < 10;
-
-    // Deteksi arah scroll
-    const isScrollingUp = scrollTop < lastScrollPosition.current;
-
-    setIsUserScrolledUp(!isAtBottom && isScrollingUp);
-    lastScrollPosition.current = scrollTop;
-  }, []);
-
-  const forceScrollToBottom = useCallback(() => {
-    messagesContainerRef.current?.scrollTo({
-      top: messagesContainerRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-    setIsUserScrolledUp(false);
+    lastScrollPosition.current = container.scrollTop;
   }, []);
 
   useEffect(() => {
     const container = messagesContainerRef.current;
     if (!container) return;
-
     container.addEventListener("scroll", checkScrollPosition);
     return () => container.removeEventListener("scroll", checkScrollPosition);
   }, [checkScrollPosition]);
 
-  // Auto-scroll instant tanpa timeout
   useEffect(() => {
-    if (shouldAutoScroll && !isUserScrolling.current) {
+    if (shouldAutoScroll) {
       const container = messagesContainerRef.current;
       if (container) {
-        container.scrollTop = container.scrollHeight; // Instant scroll tanpa animasi
+        container.scrollTop = container.scrollHeight;
       }
     }
   }, [messages, shouldAutoScroll]);
-
-  // Bersihkan timeout saat unmount
-  useEffect(() => {
-    scrollCheckTimeout.current = setTimeout(() => {
-      // logika timeout
-    }, 1000);
-
-    return () => {
-      const timeout = scrollCheckTimeout.current;
-      clearTimeout(timeout);
-    };
-  }, []);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -104,20 +70,15 @@ export default function ZesAI() {
 
   const sanitizeInput = (input) => {
     if (!input || typeof input !== "string") return "";
-
     const maxLength = 5000;
     const sanitized = input.trim();
-
-    if (sanitized.length > maxLength) {
-      return sanitized.substring(0, maxLength);
-    }
-
-    return sanitized;
+    return sanitized.length > maxLength
+      ? sanitized.substring(0, maxLength)
+      : sanitized;
   };
 
   const sanitizeAIResponse = (content) => {
     if (!content || typeof content !== "string") return "Response tidak valid";
-
     const maxLength = 20000;
     if (content.length > maxLength) {
       return (
@@ -125,11 +86,9 @@ export default function ZesAI() {
         "\n\n[Response dipotong karena terlalu panjang]"
       );
     }
-
     return content;
   };
 
-  // HANDLE INPUT
   const handleInput = (e) => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -139,155 +98,148 @@ export default function ZesAI() {
     setQuestion(e.target.value);
   };
 
-  // HANDLE SUBMIT
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
 
     const sanitizedQuestion = sanitizeInput(question);
-    if (!sanitizedQuestion) return;
+    if (!sanitizedQuestion || isStreaming) return;
 
-    const userTimestamp = new Date().toISOString();
-    setLoading(true);
-
-    const newMessage = {
-      role: "user",
-      content: sanitizedQuestion,
-      timestamp: userTimestamp,
-    };
-
+    // Reset textarea
     const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = "auto";
-    }
-
+    if (textarea) textarea.style.height = "auto";
     setQuestion("");
-    setMessages((prev) => [...prev, newMessage]);
+
+    // Buat ID unik untuk pesan AI yang akan datang
+    const newAiMessageId = `ai-${Date.now()}`;
+
+    // Tambah pesan user
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `user-${Date.now()}`,
+        role: "user",
+        content: sanitizedQuestion,
+        timestamp: new Date().toISOString(),
+      },
+    ]);
+
+    // Tambah placeholder AI dengan ID unik — SEBELUM fetch
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: newAiMessageId, // ← ID unik, bukan index
+        role: "ai",
+        content: "",
+        timestamp: new Date().toISOString(),
+        modelUsed: "",
+      },
+    ]);
+
+    const newHistory = [
+      ...chatHistory,
+      { role: "user", content: sanitizedQuestion },
+    ];
+    setChatHistory(newHistory);
+
+    // Set streaming dengan ID — bukan boolean doang
+    setIsStreaming(true);
+    setStreamingMessageId(newAiMessageId); // ← simpan ID pesan yang streaming
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      const timeoutId = setTimeout(() => controller.abort(), 60000);
 
       const res = await fetch("/api/zesAI", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ question: sanitizedQuestion }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: newHistory }),
         signal: controller.signal,
       });
 
       clearTimeout(timeoutId);
+      if (!res.ok) throw new Error("Network response was not ok");
 
-      if (!res.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      // Handle streaming response
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-
-      let aiMessageIndex = -1;
-      let aiTimestamp = new Date().toISOString();
       let modelUsed = "";
+      let aiTimestamp = new Date().toISOString();
 
-      // Add initial AI message placeholder
-      setMessages((prev) => {
-        const newMessages = [
-          ...prev,
-          {
-            role: "ai",
-            content: "",
-            timestamp: aiTimestamp,
-            modelUsed: "",
-          },
-        ];
-        aiMessageIndex = newMessages.length - 1;
-        return newMessages;
-      });
+let buffer = "";
 
-      setLoading(false);
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+  buffer += decoder.decode(value, { stream: true });
+  const lines = buffer.split("\n\n");
+  buffer = lines.pop();
 
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n");
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed.startsWith("data: ")) continue;
+    try {
+      const data = JSON.parse(trimmed.slice(6));
 
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            try {
-              const data = JSON.parse(line.slice(6));
-
-              if (data.type === "metadata") {
-                modelUsed = data.modelUsed;
-                aiTimestamp = data.timestamp;
-              } else if (data.type === "content") {
-                // Update AI message content with streaming text
-                setMessages((prev) => {
-                  const newMessages = [...prev];
-                  if (newMessages[aiMessageIndex]) {
-                    newMessages[aiMessageIndex] = {
-                      ...newMessages[aiMessageIndex],
-                      content: sanitizeAIResponse(data.content),
-                      modelUsed: modelUsed,
-                      timestamp: aiTimestamp,
-                    };
-                  }
-                  return newMessages;
-                });
-              } else if (data.type === "complete") {
-                // Final update with complete message
-                setMessages((prev) => {
-                  const newMessages = [...prev];
-                  if (newMessages[aiMessageIndex]) {
-                    newMessages[aiMessageIndex] = {
-                      ...newMessages[aiMessageIndex],
-                      content: sanitizeAIResponse(data.content),
-                      modelUsed: data.modelUsed,
-                      timestamp: data.timestamp,
-                    };
-                  }
-                  return newMessages;
-                });
-              } else if (data.type === "error") {
-                setMessages((prev) => {
-                  const newMessages = [...prev];
-                  if (newMessages[aiMessageIndex]) {
-                    newMessages[aiMessageIndex] = {
-                      ...newMessages[aiMessageIndex],
-                      content: "Terjadi kesalahan dalam memproses permintaan.",
-                      timestamp: new Date().toISOString(),
-                    };
-                  }
-                  return newMessages;
-                });
-              }
-            } catch (parseError) {
-              console.error("Error parsing stream data:", parseError);
-            }
-          }
-        }
+      if (data.type === "metadata") {
+        modelUsed = data.modelUsed;
+        aiTimestamp = data.timestamp;
+      } else if (data.type === "content") {
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === newAiMessageId
+              ? { ...msg, content: sanitizeAIResponse(data.content), modelUsed, timestamp: aiTimestamp }
+              : msg
+          )
+        );
+      } else if (data.type === "complete") {
+        setChatHistory(prev => [...prev, { role: "assistant", content: data.content }]);
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === newAiMessageId
+              ? { ...msg, content: sanitizeAIResponse(data.content), modelUsed: data.modelUsed, timestamp: data.timestamp }
+              : msg
+          )
+        );
+        setIsStreaming(false);
+        setStreamingMessageId(null);
+      } else if (data.type === "error") {
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === newAiMessageId
+              ? { ...msg, content: "Terjadi kesalahan dalam memproses permintaan.", timestamp: new Date().toISOString() }
+              : msg
+          )
+        );
+        setIsStreaming(false);
+        setStreamingMessageId(null);
       }
+    } catch (parseError) {
+      console.error("Error parsing stream data:", parseError);
+    }
+  }
+}
+
     } catch (err) {
       console.error("Chat error:", err);
-      setLoading(false);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "ai",
-          content: "Koneksi terputus atau terjadi kesalahan jaringan.",
-          timestamp: new Date().toISOString(),
-        },
-      ]);
+      setIsStreaming(false);
+      setStreamingMessageId(null);
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === newAiMessageId
+            ? {
+                ...msg,
+                content: "Koneksi terputus atau terjadi kesalahan jaringan.",
+                timestamp: new Date().toISOString(),
+              }
+            : msg,
+        ),
+      );
     }
   };
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* ── Animated rays (bottom-right) ── */}
-
-      {messages.length === 0 && !loading && (
+      {messages.length === 0 && !isStreaming && (
         <div className="absolute inset-0 pointer-events-none z-1">
           <SideRays
             speed={2.5}
@@ -302,8 +254,6 @@ export default function ZesAI() {
         </div>
       )}
 
-
-      {/* Subtle vignette overlay */}
       <div
         className="absolute inset-0 pointer-events-none -z-10"
         style={{
@@ -312,44 +262,43 @@ export default function ZesAI() {
         }}
       />
 
-      {/* ── Header / Back button ── */}
       <header className="fixed top-8 left-8 z-50">
         <GlassButton onClick={() => window.history.back()} />
       </header>
 
-      {/* ── Main content ── */}
       <main className="flex flex-col items-center justify-center flex-1 px-4 lg:px-42 min-h-screen gap-10">
-        {/* 3. Render Daftar Pesan Jika Sudah Ada Chat */}
         {messages.length > 0 && (
           <div
             ref={messagesContainerRef}
             className="scrollbar-hidden scrollbar-hide w-full lg:px-35 h-[60vh] overflow-y-auto mb-4 p-4 flex flex-col gap-4"
           >
-            {messages.map((msg, index) => (
+            {messages.map((msg) => (
               <div
-                key={index}
+                key={msg.id} // ← pakai ID bukan index sebagai key
                 className={`flex flex-col text-white ${msg.role === "user" ? "items-end" : "items-start"}`}
               >
                 {msg.role === "ai" ? (
-                  <AIMessage content={msg.content} model={msg.modelUsed} />
+                  <AIMessage
+                    content={msg.content}
+                    model={msg.modelUsed}
+                    // ← cukup bandingkan ID pesan, bukan index array
+                    isLoading={msg.id === streamingMessageId}
+                  />
                 ) : (
-                  <>
-                    <div className="chat chat-end">
-                      <div className="chat-bubble bg-white text-black">
-                        {msg.content}
-                      </div>
+                  <div className="chat chat-end">
+                    <div className="chat-bubble bg-white text-black">
+                      {msg.content}
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
             ))}
           </div>
         )}
 
-        {/* 3. Logika conditional rendering yang diperbaiki untuk Welcome Screen & Input Bar */}
-        {messages.length === 0 && !loading && (
+        {messages.length === 0 && !isStreaming && (
           <>
-          <Label variant="glass">zesAI Asisten Digital</Label>
+            <Label variant="glass">zesAI Asisten Digital</Label>
             <div>
               <Heading level={1} className="text-center">
                 Selamat Datang!
@@ -361,21 +310,17 @@ export default function ZesAI() {
           </>
         )}
 
-        {/* Input bar ditaruh di luar agar tetap muncul saat chat sedang berlangsung */}
         <div
           className="relative w-full transition-all duration-300"
           style={{ maxWidth: "680px" }}
         >
           <div
-            className="absolute inset-0 rounded-full pointer-events-none transition-opacity duration-300"
+            className="absolute inset-0 rounded-full pointer-events-none"
             style={{
               boxShadow: "0 0 0 1.5px hsla(0,0%,100%,0.15)",
               borderRadius: "9999px",
-              opacity: 1,
             }}
           />
-
-          {/* 4. Form disatukan dengan onSubmit */}
           <form onSubmit={handleSubmit}>
             <div className="flex items-center rounded-full overflow-hidden bg-[rgba(255,255,255,0.05)] backdrop-blur-md">
               <textarea
@@ -384,22 +329,20 @@ export default function ZesAI() {
                 value={question}
                 onChange={handleInput}
                 onKeyDown={(e) => {
-                  // 5. Diubah menjadi "Enter" (capital E)
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
                     handleSubmit(e);
                   }
                 }}
                 placeholder="Mulai bertanya...."
-                className="z-9999 flex-1 bg-transparent px-6 py-4 text-white placeholder-gray-500 outline-none text-base resize-none"
+                disabled={isStreaming}
+                className="z-9999 flex-1 bg-transparent px-6 py-4 text-white placeholder-gray-500 outline-none text-base resize-none disabled:opacity-60"
                 style={{ caretColor: "#4a7dff" }}
               />
-
-              {/* 4. Ditambahkan type="submit" */}
               <button
                 type="submit"
-                disabled={loading}
-                className="flex items-center justify-center w-12 h-12 mr-1.5 rounded-full text-white transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50"
+                disabled={isStreaming || !question.trim()}
+                className="flex items-center justify-center w-12 h-12 mr-1.5 rounded-full text-white transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   background:
                     "linear-gradient(135deg, #ffffff 0%, #cfcfcf 100%)",
@@ -414,12 +357,8 @@ export default function ZesAI() {
         </div>
       </main>
 
-      {/* ── Footer ── */}
       <footer className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-2 pointer-events-none">
-        <span
-          className="text-sm"
-          style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.01em" }}
-        >
+        <span className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
           AI Implemented by
         </span>
         <span

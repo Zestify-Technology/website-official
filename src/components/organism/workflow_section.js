@@ -50,7 +50,7 @@ export default function WorkflowSection() {
   const trackTotal = (steps.length - 1) * stepSpacing;
 
   return (
-    <Section direction="row" className="gap-20 lg:p-20">
+    <Section direction="col" className="gap-20 lg:p-20 lg:flex-row">
         {/* ── LEFT ── */}
         <div className="flex flex-col gap-5 lg:w-1/2">
           <div className="w-1/2">

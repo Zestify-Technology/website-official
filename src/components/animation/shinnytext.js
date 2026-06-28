@@ -114,7 +114,7 @@ const ShinyText = ({
 
   return (
     <motion.span
-      className={`inline-block ${className}`}
+      className={`inline-block ${className} text-white`}
       style={{ ...gradientStyle, backgroundPosition }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

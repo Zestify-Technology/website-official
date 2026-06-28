@@ -1,127 +1,183 @@
 import fs from "fs/promises";
-import "dotenv/config";
 import Groq from "groq-sdk";
 import path from "path";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+const tools = [
+  {
+    type: "function",
+    function: {
+      name: "get_clients",
+      description:
+        "Ambil daftar semua klien. Gunakan ketika user tanya siapa saja klien atau minta daftar klien.",
+      parameters: {
+        type: "object",
+        properties: {
+          filter: {
+            type: "string",
+            description: "Filter opsional, contoh: status = 'active'",
+          },
+          perPage: { type: "number", description: "Jumlah data, default 20" },
+        },
+        required: [],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "create_clients",
+      description:
+        "Tambah klien baru ke database. Gunakan ketika user ingin mendaftarkan atau menambahkan klien baru.",
+      parameters: {
+        type: "object",
+        properties: {
+          name: { type: "string", description: "Nama klien atau perusahaan" },
+          type: { type: "string", description: "Tipe klien: b2b atau b2c" },
+          email: { type: "string", description: "Email klien" },
+          no_whatsapp: { type: "string", description: "Nomor WhatsApp klien" },
+          address: { type: "string", description: "Alamat klien" },
+          status: {
+            type: "string",
+            description: "Status klien, contoh: berjalan, selesai",
+          },
+        },
+        required: [],
+      },
+    },
+  },
+];
+
+async function executeTool(name, args) {
+  const routes = {
+    get_clients: () => {
+      const params = new URLSearchParams(args).toString();
+      return fetch(`${BASE_URL}/api/client/list?${params}`); // ✅ absolute URL
+    },
+    create_clients: () => {
+      return fetch(`${BASE_URL}/api/client/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(args),
+      });
+    },
+  };
+
+  const fetcher = routes[name];
+  if (!fetcher) return { error: `Tool '${name}' tidak dikenal` };
+
+  const res = await fetcher();
+  return res.json();
+}
+
+async function runAgentLoop(messages, model) {
+  while (true) {
+    const response = await groq.chat.completions.create({
+      model,
+      messages,
+      tools,
+      tool_choice: "auto",
+      temperature: 0.7,
+      max_completion_tokens: 3000,
+      // ✅ TIDAK pakai stream: true di sini
+    });
+
+    const message = response.choices[0].message;
+    messages.push(message);
+
+    if (!message.tool_calls?.length) {
+      return message.content;
+    }
+
+    for (const call of message.tool_calls) {
+      const args = JSON.parse(call.function.arguments);
+      const result = await executeTool(call.function.name, args);
+
+      messages.push({
+        role: "tool",
+        tool_call_id: call.id,
+        content: JSON.stringify(result),
+      });
+    }
+  }
+}
 
 export async function POST(req) {
   try {
     const body = await req.json();
-    const userQuestion = body.question;
+    const userMessages = body.messages;
 
-    if (!userQuestion) {
+    if (!userMessages || userMessages.length === 0) {
       return new Response(
         JSON.stringify({ error: "Pertanyaan tidak boleh kosong" }),
         { status: 400 },
       );
     }
 
-    // Load system dan data files
-    const systemPrompt = await fs.readFile(
-      path.resolve("src", "data", "systemPrompt.md"),
-      "utf-8" // Tambahkan encoding agar dibaca sebagai string
-    );
+    const [systemPrompt, companyData] = await Promise.all([
+      fs.readFile(path.resolve("src", "data", "systemPrompt.md"), "utf-8"),
+      fs.readFile(path.resolve("src", "data", "companyData.md"), "utf-8"),
+    ]);
 
-    const companyData = await fs.readFile(
-      path.resolve("src", "data", "companyData.md"),
-      "utf-8"
-    );
+    const messages = [
+      { role: "system", content: `${systemPrompt}\n\n${companyData}` },
+      ...userMessages,
+    ];
 
-    // List model CHAT resmi Groq yang valid
+    // ✅ Fallback model untuk runAgentLoop
     const modelList = ["openai/gpt-oss-120b", "llama-3.3-70b-versatile"];
-
-    let groqStream = null;
+    let reply = null;
     let modelUsed = null;
 
-    // Loop fallback model jika ada yang gagal/rate limit
     for (const model of modelList) {
       try {
+        reply = await runAgentLoop(messages, model);
         modelUsed = model;
-        // Gunakan stream: true untuk streaming asli dari Groq
-        groqStream = await groq.chat.completions.create({
-          model,
-          messages: [
-            {
-              role: "system",
-              content: `${systemPrompt}\n\n${companyData}`,
-            },
-            {
-              role: "user",
-              content: userQuestion,
-            }
-          ],
-          temperature: 0.7,
-          max_completion_tokens: 3000,
-          top_p: 0.9,
-          stream: true, 
-        });
-        break; 
-      } catch (error) {
-        console.warn(`⚠️ Model ${model} gagal:`, error.message);
+        break;
+      } catch (err) {
+        console.warn(`⚠️ Model ${model} gagal:`, err.message);
         continue;
       }
     }
 
-    if (!groqStream) {
+    if (!reply) {
       throw new Error("Semua model sedang tidak bisa diakses!");
     }
 
+    // ✅ Stream jawaban final ke client
+    // ✅ Ganti bagian stream ini
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
-        try {
-          // 1. Kirim Metadata Awal ke Client
-          const metadata = {
-            type: "metadata",
-            modelUsed: modelUsed,
-            timestamp: new Date().toISOString(),
-          };
+        // Kirim metadata dulu
+        controller.enqueue(
+          encoder.encode(
+            `data: ${JSON.stringify({ type: "metadata", modelUsed, timestamp: new Date().toISOString() })}\n\n`,
+          ),
+        );
+
+        // Kirim karakter satu per satu — efek typing
+        let accumulated = "";
+        for (const char of reply) {
+          accumulated += char;
           controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify(metadata)}\n\n`),
+            encoder.encode(
+              `data: ${JSON.stringify({ type: "content", content: accumulated })}\n\n`,
+            ),
           );
-
-          let completeReply = "";
-
-          // 2. Baca Chunk langsung dari stream Groq (Real-time Streaming)
-          for await (const chunk of groqStream) {
-            const content = chunk.choices[0]?.delta?.content || "";
-            if (content) {
-              completeReply += content;
-
-              const contentChunk = {
-                type: "content",
-                content: completeReply, // Mengirim teks akumulatif sesuai kebutuhan komponen klien Anda
-              };
-              controller.enqueue(
-                encoder.encode(`data: ${JSON.stringify(contentChunk)}\n\n`),
-              );
-            }
-          }
-
-          // 3. Kirim Isyarat Selesai
-          const completionSignal = {
-            type: "complete",
-            content: completeReply,
-            modelUsed: modelUsed,
-            timestamp: new Date().toISOString(),
-          };
-          controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify(completionSignal)}\n\n`),
-          );
-
-          controller.close();
-        } catch (error) {
-          console.error("Stream processing error:", error);
-          const errorChunk = {
-            type: "error",
-            error: error.message,
-          };
-          controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify(errorChunk)}\n\n`),
-          );
-          controller.close();
+          // Delay antar karakter (dalam ms) — makin kecil makin cepat
+          await new Promise((res) => setTimeout(res, 8));
         }
+
+        // Kirim complete
+        controller.enqueue(
+          encoder.encode(
+            `data: ${JSON.stringify({ type: "complete", content: reply, modelUsed, timestamp: new Date().toISOString() })}\n\n`,
+          ),
+        );
+        controller.close();
       },
     });
 
