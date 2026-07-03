@@ -6,8 +6,11 @@ import Heading from "@/components/atoms/heading";
 import Label from "@/components/atoms/labels";
 import Paragraph from "@/components/atoms/paragraph";
 import { GlassButton } from "@/components/molecules/button/button";
+import PopupOverlay from "@/components/organism/popup";
 import AIMessage from "@/components/organism/zesAI/typografi_porse";
 import { useState, useEffect, useRef, useCallback } from "react";
+
+
 
 function SendIcon() {
   return (
@@ -34,6 +37,7 @@ export default function ZesAI() {
   const [messages, setMessages] = useState([]);
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
   const [chatHistory, setChatHistory] = useState([]);
+  const [isOpened, setIsOpened] = useState(true)
 
   const textareaRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -239,6 +243,55 @@ while (true) {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
+<PopupOverlay isOpen={isOpened} onClose={() => setIsOpened(false)}>
+  <div className="flex flex-col gap-4 p-2 text-left">
+    {/* Judul Utama */}
+    <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+      ERA BARU DENGAN AGENTIC AI
+    </h3>
+    
+    {/* Paragraf Utama - Ketebalan Normal (font-normal) & text-gray-300 agar tidak terlalu mencolok */}
+    <p className="text-sm sm:text-base font-normal text-gray-300 leading-relaxed">
+      Kami sudah tidak menggunakan form lagi untuk pengajuan dan beralih ke <span className="text-white font-medium">AI Native</span> untuk memudahkan klien melakukan pengajuan dan pengecekan secara instan.
+    </p>
+
+    {/* Pembatas Halus */}
+    <div className="h-[1px] w-full bg-white/10 my-1" />
+
+    {/* Bagian List Kemampuan AI */}
+    <div className="flex flex-col gap-3">
+      <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+        Yang bisa kamu lakukan:
+      </span>
+      
+      <ul className="flex flex-col gap-2.5">
+        {/* List 1: AI Pengecekan */}
+        <li className="flex items-start gap-3 text-sm sm:text-base text-gray-200 font-normal">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white text-[10px]">
+            ✦
+          </span>
+          <span>
+            <strong className="text-white font-medium">AI Pengecekan:</strong> Cek apakah data kamu sudah terdaftar di sistem atau belum secara *real-time*.
+          </span>
+        </li>
+
+        {/* List 2: Pengajuan Konsultasi */}
+        <li className="flex items-start gap-3 text-sm sm:text-base text-gray-200 font-normal">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white text-[10px]">
+            ✦
+          </span>
+          <span>
+            <strong className="text-white font-medium">Pengajuan Konsultasi:</strong> Jadwalkan diskusi dan konsultasi langsung via asisten pintar kami.
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    {/* Tombol Aksi Tambahan di Bawah Popup */}
+
+  </div>
+</PopupOverlay>
+
       {messages.length === 0 && !isStreaming && (
         <div className="absolute inset-0 pointer-events-none z-1">
           <SideRays

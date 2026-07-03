@@ -139,3 +139,36 @@ export function ShinyButton({ children }) {
     </button>
   );
 }
+
+export function SubmitButton({ children = "Button", href, onClick, className = "" }) {
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    if (href) {
+      router.push(href);
+    } else if (onClick) {
+      onClick(e);
+    }
+  };
+
+  return (
+    <button
+      type="submit"
+      onClick={handleClick}
+      className={`
+        relative w-full sm:w-fit md:min-w-[180px] px-6 py-2.5 sm:px-8 sm:py-3
+        rounded-xl font-semibold text-gray-700 text-sm sm:text-base tracking-wide
+        bg-white border border-gray-300
+        hover:bg-gray-50 hover:border-gray-400 hover:text-gray-900
+        active:scale-[0.98] active:bg-gray-100
+        shadow-sm
+        transition-all duration-200 ease-out
+        focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2
+        cursor-pointer
+        ${className}
+      `}
+    >
+      {children}
+    </button>
+  );
+}

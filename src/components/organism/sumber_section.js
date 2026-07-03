@@ -10,7 +10,7 @@ import Image from "next/image"
 export default function SumberSection(){
     return(
         // Tambahkan props direction="col" di sini, hapus className="flex"
-        <section className="w-full min-h-screen flex flex-col lg:flex-row gap-10 justify-center items-center"> 
+        <section id="source" className="w-full min-h-screen flex flex-col lg:flex-row gap-10 justify-center items-center"> 
             <div className="lg:1/2"> {/* Tambahkan width agar image tidak gepeng */}
                 <Image
                 src='/sumberDaya.svg'

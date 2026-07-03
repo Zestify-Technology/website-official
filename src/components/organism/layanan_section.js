@@ -8,7 +8,7 @@ import PricingCardsGrid from "../molecules/pricingcard";
 export default function LayananSection() {
 
     return(
-        <Section>
+        <Section id='layanan'>
             <div className="space-y-5 text-center lg:w-[60%]">
                 <Label variant="glass">Layanan</Label>
                 <Heading level={2} >

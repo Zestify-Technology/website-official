@@ -11,7 +11,7 @@ const tools = [
     function: {
       name: "get_clients",
       description:
-        "Ambil daftar semua klien. Gunakan ketika user tanya siapa saja klien atau minta daftar klien.",
+        "Ambil data klien. Gunakan ketika user tanya ada berapa klien yang terdaftar dan mengecek apakah klien tersebut sudah terdaftar",
       parameters: {
         type: "object",
         properties: {
@@ -28,20 +28,19 @@ const tools = [
   {
     type: "function",
     function: {
-      name: "create_clients",
+      name: "create_consultation",
       description:
-        "Tambah klien baru ke database. Gunakan ketika user ingin mendaftarkan atau menambahkan klien baru.",
+        "Tambah klien baru dengan pengajuan konsultasi. Gunakan ketika user ingin mengajukan konsultasi",
       parameters: {
         type: "object",
         properties: {
           name: { type: "string", description: "Nama klien atau perusahaan" },
-          type: { type: "string", description: "Tipe klien: b2b atau b2c" },
+          detail: { type: "string", description: "detail masalah atau topik yang akan di konsultasikan" },
           email: { type: "string", description: "Email klien" },
           no_whatsapp: { type: "string", description: "Nomor WhatsApp klien" },
-          address: { type: "string", description: "Alamat klien" },
           status: {
             type: "string",
-            description: "Status klien, contoh: berjalan, selesai",
+            description: "Status klien, contoh: berjalan, selesai, konsultasi",
           },
         },
         required: [],
@@ -56,8 +55,8 @@ async function executeTool(name, args) {
       const params = new URLSearchParams(args).toString();
       return fetch(`${BASE_URL}/api/client/list?${params}`); // ✅ absolute URL
     },
-    create_clients: () => {
-      return fetch(`${BASE_URL}/api/client/create`, {
+    create_consultation: () => {
+      return fetch(`${BASE_URL}/api/consultation/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(args),

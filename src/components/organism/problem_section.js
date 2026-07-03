@@ -7,7 +7,7 @@ import Label from "../atoms/labels"
 export default function ProblemSection(){
     return(
         // px-4 menjaga agar komponen tidak menempel langsung ke tepi layar handphone
-        <Section className="w-full flex flex-col items-center gap-8 py-10 px-4 my-30 max-w-4xl mx-auto">
+        <Section id='problem' className="w-full flex flex-col items-center gap-8 py-10 px-4 my-30 max-w-4xl mx-auto">
             
             <Label variant="glass">AI Solved The Problem</Label>
             

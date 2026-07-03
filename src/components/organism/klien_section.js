@@ -7,7 +7,7 @@ import Section from "../template/tagHTML/section";
 
 export default function KlienSection() {
   return (
-    <Section>
+    <Section id='klien'>
       <div className="lg:w-[60%] space-y-3 flex items-center justify-center flex-col">
         <Label variant="glass">Klien Kami</Label>
         <Heading level={2} className="text-center">

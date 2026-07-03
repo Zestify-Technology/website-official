@@ -14,7 +14,7 @@ const router = useRouter()
 
     return(
         // Tambahkan props direction="col" di sini, hapus className="flex"
-        <section className="w-full min-h-screen flex flex-col lg:flex-row gap-10 justify-center items-center"> 
+        <section id="tentang" className="w-full min-h-screen flex flex-col lg:flex-row gap-10 justify-center items-center"> 
             <div className="lg:w-1/2"> {/* Tambahkan width agar image tidak gepeng */}
                 <Image
                 src='/tentang_section.svg'
