@@ -10,8 +10,6 @@ import PopupOverlay from "@/components/organism/popup";
 import AIMessage from "@/components/organism/zesAI/typografi_porse";
 import { useState, useEffect, useRef, useCallback } from "react";
 
-
-
 function SendIcon() {
   return (
     <svg
@@ -37,7 +35,7 @@ export default function ZesAI() {
   const [messages, setMessages] = useState([]);
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
   const [chatHistory, setChatHistory] = useState([]);
-  const [isOpened, setIsOpened] = useState(true)
+  const [isOpened, setIsOpened] = useState(true);
 
   const textareaRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -92,6 +90,30 @@ export default function ZesAI() {
     }
     return content;
   };
+
+const handleKeyDown = (e) => {
+  if (e.nativeEvent.isComposing) return;
+
+  if (e.key !== "Enter") return;
+
+  // Cek apakah user menggunakan perangkat mobile/touch screen
+  const isTouchDevice =
+    navigator.maxTouchPoints > 0 &&
+    window.matchMedia("(pointer: coarse)").matches;
+
+  // JIKA DI MOBILE: biarkan Enter berfungsi sebagai baris baru secara default (jangan submit)
+  if (isTouchDevice) return;
+
+  // JIKA DI DESKTOP:
+  if (e.shiftKey) {
+    // Jika tekan Shift + Enter, biarkan membuat baris baru (default behavior textarea)
+    return;
+  } else {
+    // Jika hanya tekan Enter tanpa Shift, cegah baris baru dan lakukan submit
+    e.preventDefault();
+    handleSubmit(e);
+  }
+};
 
   const handleInput = (e) => {
     const textarea = textareaRef.current;
@@ -168,61 +190,78 @@ export default function ZesAI() {
       let modelUsed = "";
       let aiTimestamp = new Date().toISOString();
 
-let buffer = "";
+      let buffer = "";
 
-while (true) {
-  const { done, value } = await reader.read();
-  if (done) break;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-  buffer += decoder.decode(value, { stream: true });
-  const lines = buffer.split("\n\n");
-  buffer = lines.pop();
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n\n");
+        buffer = lines.pop();
 
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed.startsWith("data: ")) continue;
-    try {
-      const data = JSON.parse(trimmed.slice(6));
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith("data: ")) continue;
+          try {
+            const data = JSON.parse(trimmed.slice(6));
 
-      if (data.type === "metadata") {
-        modelUsed = data.modelUsed;
-        aiTimestamp = data.timestamp;
-      } else if (data.type === "content") {
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === newAiMessageId
-              ? { ...msg, content: sanitizeAIResponse(data.content), modelUsed, timestamp: aiTimestamp }
-              : msg
-          )
-        );
-      } else if (data.type === "complete") {
-        setChatHistory(prev => [...prev, { role: "assistant", content: data.content }]);
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === newAiMessageId
-              ? { ...msg, content: sanitizeAIResponse(data.content), modelUsed: data.modelUsed, timestamp: data.timestamp }
-              : msg
-          )
-        );
-        setIsStreaming(false);
-        setStreamingMessageId(null);
-      } else if (data.type === "error") {
-        setMessages((prev) =>
-          prev.map((msg) =>
-            msg.id === newAiMessageId
-              ? { ...msg, content: "Terjadi kesalahan dalam memproses permintaan.", timestamp: new Date().toISOString() }
-              : msg
-          )
-        );
-        setIsStreaming(false);
-        setStreamingMessageId(null);
+            if (data.type === "metadata") {
+              modelUsed = data.modelUsed;
+              aiTimestamp = data.timestamp;
+            } else if (data.type === "content") {
+              setMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === newAiMessageId
+                    ? {
+                        ...msg,
+                        content: sanitizeAIResponse(data.content),
+                        modelUsed,
+                        timestamp: aiTimestamp,
+                      }
+                    : msg,
+                ),
+              );
+            } else if (data.type === "complete") {
+              setChatHistory((prev) => [
+                ...prev,
+                { role: "assistant", content: data.content },
+              ]);
+              setMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === newAiMessageId
+                    ? {
+                        ...msg,
+                        content: sanitizeAIResponse(data.content),
+                        modelUsed: data.modelUsed,
+                        timestamp: data.timestamp,
+                      }
+                    : msg,
+                ),
+              );
+              setIsStreaming(false);
+              setStreamingMessageId(null);
+            } else if (data.type === "error") {
+              setMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === newAiMessageId
+                    ? {
+                        ...msg,
+                        content:
+                          "Terjadi kesalahan dalam memproses permintaan.",
+                        timestamp: new Date().toISOString(),
+                      }
+                    : msg,
+                ),
+              );
+              setIsStreaming(false);
+              setStreamingMessageId(null);
+            }
+          } catch (parseError) {
+            console.error("Error parsing stream data:", parseError);
+          }
+        }
       }
-    } catch (parseError) {
-      console.error("Error parsing stream data:", parseError);
-    }
-  }
-}
-
     } catch (err) {
       console.error("Chat error:", err);
       setIsStreaming(false);
@@ -243,54 +282,63 @@ while (true) {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-<PopupOverlay isOpen={isOpened} onClose={() => setIsOpened(false)}>
-  <div className="flex flex-col gap-4 p-2 text-left">
-    {/* Judul Utama */}
-    <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
-      ERA BARU DENGAN AGENTIC AI
-    </h3>
-    
-    {/* Paragraf Utama - Ketebalan Normal (font-normal) & text-gray-300 agar tidak terlalu mencolok */}
-    <p className="text-sm sm:text-base font-normal text-gray-300 leading-relaxed">
-      Kami sudah tidak menggunakan form lagi untuk pengajuan dan beralih ke <span className="text-white font-medium">AI Native</span> untuk memudahkan klien melakukan pengajuan dan pengecekan secara instan.
-    </p>
+      <PopupOverlay isOpen={isOpened} onClose={() => setIsOpened(false)}>
+        <div className="flex flex-col gap-4 p-2 text-left">
+          {/* Judul Utama */}
+          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+            ERA BARU DENGAN AGENTIC AI
+          </h3>
 
-    {/* Pembatas Halus */}
-    <div className="h-[1px] w-full bg-white/10 my-1" />
+          {/* Paragraf Utama - Ketebalan Normal (font-normal) & text-gray-300 agar tidak terlalu mencolok */}
+          <p className="text-sm sm:text-base font-normal text-gray-300 leading-relaxed">
+            Kami sudah tidak menggunakan form lagi untuk pengajuan dan beralih
+            ke <span className="text-white font-medium">AI Native</span> untuk
+            memudahkan klien melakukan pengajuan dan pengecekan secara instan.
+          </p>
 
-    {/* Bagian List Kemampuan AI */}
-    <div className="flex flex-col gap-3">
-      <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-        Yang bisa kamu lakukan:
-      </span>
-      
-      <ul className="flex flex-col gap-2.5">
-        {/* List 1: AI Pengecekan */}
-        <li className="flex items-start gap-3 text-sm sm:text-base text-gray-200 font-normal">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white text-[10px]">
-            ✦
-          </span>
-          <span>
-            <strong className="text-white font-medium">AI Pengecekan:</strong> Cek apakah data kamu sudah terdaftar di sistem atau belum secara *real-time*.
-          </span>
-        </li>
+          {/* Pembatas Halus */}
+          <div className="h-[1px] w-full bg-white/10 my-1" />
 
-        {/* List 2: Pengajuan Konsultasi */}
-        <li className="flex items-start gap-3 text-sm sm:text-base text-gray-200 font-normal">
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white text-[10px]">
-            ✦
-          </span>
-          <span>
-            <strong className="text-white font-medium">Pengajuan Konsultasi:</strong> Jadwalkan diskusi dan konsultasi langsung via asisten pintar kami.
-          </span>
-        </li>
-      </ul>
-    </div>
+          {/* Bagian List Kemampuan AI */}
+          <div className="flex flex-col gap-3">
+            <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+              Yang bisa kamu lakukan:
+            </span>
 
-    {/* Tombol Aksi Tambahan di Bawah Popup */}
+            <ul className="flex flex-col gap-2.5">
+              {/* List 1: AI Pengecekan */}
+              <li className="flex items-start gap-3 text-sm sm:text-base text-gray-200 font-normal">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white text-[10px]">
+                  ✦
+                </span>
+                <span>
+                  <strong className="text-white font-medium">
+                    AI Pengecekan:
+                  </strong>{" "}
+                  Cek apakah data kamu sudah terdaftar di sistem atau belum
+                  secara *real-time*.
+                </span>
+              </li>
 
-  </div>
-</PopupOverlay>
+              {/* List 2: Pengajuan Konsultasi */}
+              <li className="flex items-start gap-3 text-sm sm:text-base text-gray-200 font-normal">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 border border-white/20 text-white text-[10px]">
+                  ✦
+                </span>
+                <span>
+                  <strong className="text-white font-medium">
+                    Pengajuan Konsultasi:
+                  </strong>{" "}
+                  Jadwalkan diskusi dan konsultasi langsung via asisten pintar
+                  kami.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Tombol Aksi Tambahan di Bawah Popup */}
+        </div>
+      </PopupOverlay>
 
       {messages.length === 0 && !isStreaming && (
         <div className="absolute inset-0 pointer-events-none z-1">
@@ -363,45 +411,66 @@ while (true) {
           </>
         )}
 
-        <div
-          className="relative w-full transition-all duration-300"
-          style={{ maxWidth: "680px" }}
-        >
-          <div
-            className="absolute inset-0 rounded-full pointer-events-none"
-            style={{
-              boxShadow: "0 0 0 1.5px hsla(0,0%,100%,0.15)",
-              borderRadius: "9999px",
-            }}
-          />
+        <div className="w-full max-w-[680px] mx-auto">
           <form onSubmit={handleSubmit}>
-            <div className="flex items-center rounded-full overflow-hidden bg-[rgba(255,255,255,0.05)] backdrop-blur-md">
+            <div
+              className={`
+        flex items-end gap-2
+        bg-white/5
+        backdrop-blur-xl
+        border border-white/15
+        shadow-[0_0_20px_rgba(0,0,0,.15)]
+        transition-all duration-200
+        ${
+          question.split("\n").length > 1 || question.length > 10
+            ? "rounded-3xl"
+            : "rounded-full"
+        }
+      `}
+            >
               <textarea
                 ref={textareaRef}
                 rows={1}
                 value={question}
                 onChange={handleInput}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSubmit(e);
-                  }
-                }}
-                placeholder="Mulai bertanya...."
+                onKeyDown={handleKeyDown}
+                placeholder="Mulai bertanya..."
                 disabled={isStreaming}
-                className="z-9999 flex-1 bg-transparent px-6 py-4 text-white placeholder-gray-500 outline-none text-base resize-none disabled:opacity-60"
-                style={{ caretColor: "#4a7dff" }}
+                className="
+          flex-1
+          bg-transparent
+          text-white
+          placeholder:text-gray-500
+          resize-none
+          outline-none
+          px-6
+          py-4
+          leading-6
+          max-h-40
+          overflow-y-auto
+        "
               />
+
               <button
                 type="submit"
                 disabled={isStreaming || !question.trim()}
-                className="flex items-center justify-center w-12 h-12 mr-1.5 rounded-full text-white transition-all duration-200 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #ffffff 0%, #cfcfcf 100%)",
-                  boxShadow: "0 0 16px rgba(74,125,255,0.4)",
-                  flexShrink: 0,
-                }}
+                className="
+          mb-2
+          mr-2
+          h-11
+          w-11
+          shrink-0
+          rounded-full
+          flex
+          items-center
+          justify-center
+          bg-white
+          text-black
+          transition
+          hover:scale-105
+          active:scale-95
+          disabled:opacity-40
+        "
               >
                 <SendIcon />
               </button>

@@ -1,6 +1,4 @@
 import { pbAI } from "@/app/lib/pocketbaseAI";
-import { Component } from "lucide-react";
-import { Languages } from "lucide-react";
 
 export async function POST(req) {
   try {

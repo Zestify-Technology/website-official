@@ -53,7 +53,7 @@ async function executeTool(name, args) {
   const routes = {
     get_clients: () => {
       const params = new URLSearchParams(args).toString();
-      return fetch(`${BASE_URL}/api/client/list?${params}`); // ✅ absolute URL
+      return fetch(`${BASE_URL}/api/client/list?${params}`); 
     },
     create_consultation: () => {
       return fetch(`${BASE_URL}/api/consultation/create`, {
@@ -71,20 +71,34 @@ async function executeTool(name, args) {
   return res.json();
 }
 
+// ✅ PERBAIKAN: Fungsi runAgentLoop sekarang aman dari kontaminasi antar model
 async function runAgentLoop(messages, model) {
+  // Deep copy array messages agar tidak merusak array asli saat fallback/retry model lain
+  let localMessages = JSON.parse(JSON.stringify(messages));
+
   while (true) {
     const response = await groq.chat.completions.create({
       model,
-      messages,
+      messages: localMessages,
       tools,
       tool_choice: "auto",
       temperature: 0.7,
       max_completion_tokens: 3000,
-      // ✅ TIDAK pakai stream: true di sini
     });
 
     const message = response.choices[0].message;
-    messages.push(message);
+
+    // ✅ SANITASI: Hanya ambil properti standar demi kecocokan dengan model Llama
+    const sanitizedMessage = {
+      role: message.role,
+      content: message.content || "",
+    };
+    
+    if (message.tool_calls) {
+      sanitizedMessage.tool_calls = message.tool_calls;
+    }
+
+    localMessages.push(sanitizedMessage);
 
     if (!message.tool_calls?.length) {
       return message.content;
@@ -94,7 +108,7 @@ async function runAgentLoop(messages, model) {
       const args = JSON.parse(call.function.arguments);
       const result = await executeTool(call.function.name, args);
 
-      messages.push({
+      localMessages.push({
         role: "tool",
         tool_call_id: call.id,
         content: JSON.stringify(result),
@@ -125,8 +139,7 @@ export async function POST(req) {
       ...userMessages,
     ];
 
-    // ✅ Fallback model untuk runAgentLoop
-    const modelList = ["openai/gpt-oss-120b", "llama-3.3-70b-versatile"];
+    const modelList = ["openai/gpt-oss-120b", "llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
     let reply = null;
     let modelUsed = null;
 
@@ -145,8 +158,7 @@ export async function POST(req) {
       throw new Error("Semua model sedang tidak bisa diakses!");
     }
 
-    // ✅ Stream jawaban final ke client
-    // ✅ Ganti bagian stream ini
+    // ✅ Stream jawaban final ke client dengan efek typing
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
@@ -157,7 +169,7 @@ export async function POST(req) {
           ),
         );
 
-        // Kirim karakter satu per satu — efek typing
+        // Kirim karakter satu per satu
         let accumulated = "";
         for (const char of reply) {
           accumulated += char;
@@ -166,11 +178,10 @@ export async function POST(req) {
               `data: ${JSON.stringify({ type: "content", content: accumulated })}\n\n`,
             ),
           );
-          // Delay antar karakter (dalam ms) — makin kecil makin cepat
           await new Promise((res) => setTimeout(res, 8));
         }
 
-        // Kirim complete
+        // Kirim status complete
         controller.enqueue(
           encoder.encode(
             `data: ${JSON.stringify({ type: "complete", content: reply, modelUsed, timestamp: new Date().toISOString() })}\n\n`,
