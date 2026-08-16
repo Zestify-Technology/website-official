@@ -35,7 +35,10 @@ const tools = [
         type: "object",
         properties: {
           name: { type: "string", description: "Nama klien atau perusahaan" },
-          detail: { type: "string", description: "detail masalah atau topik yang akan di konsultasikan" },
+          detail: {
+            type: "string",
+            description: "detail masalah atau topik yang akan di konsultasikan",
+          },
           email: { type: "string", description: "Email klien" },
           no_whatsapp: { type: "string", description: "Nomor WhatsApp klien" },
           status: {
@@ -53,7 +56,7 @@ async function executeTool(name, args) {
   const routes = {
     get_clients: () => {
       const params = new URLSearchParams(args).toString();
-      return fetch(`${BASE_URL}/api/client/list?${params}`); 
+      return fetch(`${BASE_URL}/api/client/list?${params}`);
     },
     create_consultation: () => {
       return fetch(`${BASE_URL}/api/consultation/create`, {
@@ -93,7 +96,7 @@ async function runAgentLoop(messages, model) {
       role: message.role,
       content: message.content || "",
     };
-    
+
     if (message.tool_calls) {
       sanitizedMessage.tool_calls = message.tool_calls;
     }
@@ -139,7 +142,11 @@ export async function POST(req) {
       ...userMessages,
     ];
 
-    const modelList = ["openai/gpt-oss-120b", "llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
+    const modelList = [
+      "llama-3.3-70b-versatile",
+      "openai/gpt-oss-120b",
+      "llama-3.1-8b-instant",
+    ];
     let reply = null;
     let modelUsed = null;
 
